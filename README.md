@@ -1,4 +1,4 @@
-# Título del trabajo
+## Título del trabajo
 
 Máquina expendedora tarot
 
