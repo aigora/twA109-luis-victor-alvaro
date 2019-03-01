@@ -6,11 +6,11 @@ Maquina expendedora de caramelos de colores, esta maquina detectara el color de 
 
 ## Integrantes del equipo
 
-Luis Perez Gonzalez- luispgonzalez
-Victor Ramos Perez- victorramosperez
-Alvaro Romero Rodriguez- alvaroromerorodriguez
+*Luis Perez Gonzalez- luispgonzalez
+*Victor Ramos Perez- victorramosperez
+*Alvaro Romero Rodriguez- alvaroromerorodriguez
 
 ## Objetivo del trabajo
 
-Aprender a programar hardware y software.
+*Aprender a programar hardware y software.
 
