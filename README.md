@@ -6,13 +6,23 @@ Maquina expendedora de caramelos de colores, esta maquina detectara el color de 
 
 ## Integrantes del equipo
 
--Luis Perez Gonzalez- luispgonzalez 
+- Luis Perez Gonzalez- luispgonzalez 
 
--Victor Ramos Perez- victorramosperez 
+- Victor Ramos Perez- victorramosperez 
 
--Alvaro Romero Rodriguez- alvaroromerorodriguez 
+- Alvaro Romero Rodriguez- alvaroromerorodriguez 
 
 ## Objetivo del trabajo
 
--Aprender a programar hardware y software.
+- Aprender a programar hardware y software.
 
+## Sensores necesarios
+
+- 1 placa Arduino
+- Estructura de madera o carton
+- 3 servomotores
+- Detector o identificador de colores
+- Detector de peso
+- Pantalla de texto
+- Recipiente para los caramelos
+- Cable conector
