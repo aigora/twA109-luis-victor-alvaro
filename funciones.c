@@ -39,13 +39,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //ROJO ROJO ROJO
+						    printf(" MENSAJE \n"); //ROJO ROJO ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //ROJO ROJO VERDE
+						    printf(" MENSAJE \n"); //ROJO ROJO VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //ROJO ROJO AZUL
+						    printf(" MENSAJE \n"); //ROJO ROJO AZUL
 						    break;
 					}
 			    }
@@ -54,13 +54,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //ROJO VERDE ROJO
+						    printf(" MENSAJE \n"); //ROJO VERDE ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //ROJO VERDE VERDE
+						    printf(" MENSAJE \n"); //ROJO VERDE VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //ROJO VERDE AZUL
+						    printf(" MENSAJE \n"); //ROJO VERDE AZUL
 						    break;
 					}
 		    	}
@@ -69,13 +69,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //ROJO AZUL ROJO
+						    printf(" MENSAJE \n"); //ROJO AZUL ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //ROJO AZUL VERDE
+						    printf(" MENSAJE \n"); //ROJO AZUL VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //ROJO AZUL AZUL
+						    printf(" MENSAJE \n"); //ROJO AZUL AZUL
 						    break;
 					}		
 				}
@@ -90,13 +90,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //VERDE ROJO ROJO
+						    printf(" MENSAJE \n"); //VERDE ROJO ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //VERDE ROJO VERDE
+						    printf(" MENSAJE \n"); //VERDE ROJO VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //VERDE ROJO AZUL
+						    printf(" MENSAJE \n"); //VERDE ROJO AZUL
 						    break;
 					}
 			    }
@@ -105,13 +105,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //VERDE VERDE ROJO
+						    printf(" MENSAJE \n"); //VERDE VERDE ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //VERDE VERDE VERDE
+						    printf(" MENSAJE \n"); //VERDE VERDE VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //VERDE VERDE AZUL
+						    printf(" MENSAJE \n"); //VERDE VERDE AZUL
 						    break;
 					}
 		    	}
@@ -120,13 +120,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //VERDE AZUL ROJO
+						    printf(" MENSAJE \n"); //VERDE AZUL ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //VERDE AZUL VERDE
+						    printf(" MENSAJE \n"); //VERDE AZUL VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //VERDE AZUL AZUL
+						    printf(" MENSAJE \n"); //VERDE AZUL AZUL
 						    break;
 					}		
 				}
@@ -141,13 +141,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //AZUL ROJO ROJO
+						    printf(" MENSAJE \n"); //AZUL ROJO ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //AZUL ROJO VERDE
+						    printf(" MENSAJE \n"); //AZUL ROJO VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //AZUL ROJO AZUL
+						    printf(" MENSAJE \n"); //AZUL ROJO AZUL
 						    break;
 					}
 			    }
@@ -156,13 +156,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //AZUL VERDE ROJO
+						    printf(" MENSAJE \n"); //AZUL VERDE ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //AZUL VERDE VERDE
+						    printf(" MENSAJE \n"); //AZUL VERDE VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //AZUL VERDE AZUL
+						    printf(" MENSAJE \n"); //AZUL VERDE AZUL
 						    break;
 					}
 		    	}
@@ -171,13 +171,13 @@ void mensaje(int combinacion[])
 					switch (combinacion[3])
 					{
 						case 1: 
-						    printf(" \n"); //AZUL AZUL ROJO
+						    printf(" MENSAJE \n"); //AZUL AZUL ROJO
 						    break;
 						case 2: 
-						    printf(" \n"); //AZUL AZUL VERDE
+						    printf(" MENSAJE \n"); //AZUL AZUL VERDE
 						    break;
 						case 3: 
-						    printf(" \n"); //AZUL AZUL AZUL
+						    printf(" MENSAJE \n"); //AZUL AZUL AZUL
 						    break;
 					}		
 				}
