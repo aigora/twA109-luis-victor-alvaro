@@ -185,3 +185,29 @@ void mensaje(int combinacion[])
 		}
 	}
 }
+
+void color(int color[3]){
+	int i;
+ sensor_color;
+	
+	rojo=1;
+	azul=2;
+	verde=3;
+	
+	for(i=0; i<3; i++){
+	
+	   switch(c){
+		   case 1: color[i]=1;
+		   case 2: color[i]=2;
+		   case 3: color[i]=3;
+	   }
+    }
+    
+}
+
+
+void main(){
+	
+	printf("Los colores de los caramelos son: ");
+	color(color[]);
+}
