@@ -3,6 +3,7 @@
 void peso(float);
 void servo_peso(void);
 void mensaje(int[]);
+void color(int[]);
 int main (void)
 {
 }
