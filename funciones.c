@@ -205,9 +205,3 @@ void color(int color[3]){
     
 }
 
-
-void main(){
-	
-	printf("Los colores de los caramelos son: ");
-	color(color[]);
-}
