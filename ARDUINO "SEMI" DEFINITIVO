@@ -1,0 +1,167 @@
+#include <HX711.h>
+#define DOUT  A1
+#define CLK  A0
+#include <Servo.h>
+#define S0 8
+#define S1 9
+#define S2 12
+#define S3 11
+#define salidaSensor 10
+
+HX711 balanza;
+Servo servoMotor;
+int i;
+int frecuenciaRojo = 0;
+int frecuenciaVerde = 0;
+int frecuenciaAzul = 0;
+int colorRojo;
+int colorVerde;
+int colorAzul;
+
+
+void setup() {
+Serial.begin(9600);
+balanza.begin(DOUT, CLK);
+  Serial.print("Lectura del valor del ADC:  ");
+  Serial.println(balanza.read());
+  Serial.println("No ponga ningun  objeto sobre la balanza");
+  Serial.println("Destarando...");
+  Serial.println("...");
+  balanza.set_scale(439430.25); // Establecemos la escala
+  balanza.tare(20);  //El peso actual es considerado Tara.
+  
+  Serial.println("Listo para pesar");  
+//declaramos el servomotor//
+
+ 
+   // Iniciamos el monitor serie para mostrar el resultado
+ 
+  // Iniciamos el servo para que empiece a trabajar con el pin 9
+  servoMotor.attach(5);
+ 
+  // Inicializamos al ángulo 0 el servomotor
+  servoMotor.write(0);
+
+
+    // Definiendo las Salidas
+  pinMode(S0, OUTPUT);
+  pinMode(S1, OUTPUT);
+  pinMode(S2, OUTPUT);
+  pinMode(S3, OUTPUT);
+  
+  // Definiendo salidaSensor como entrada
+  pinMode(salidaSensor, INPUT);
+  
+  // Definiendo la escala de frecuencia a 20%
+  digitalWrite(S0,HIGH);
+  digitalWrite(S1,LOW);
+}
+
+void loop() {
+  Serial.print("Peso: ");
+  Serial.print(balanza.get_units(20),3);
+  Serial.println(" kg");
+  if(balanza.read()==0)
+  { 
+    //Empieza en 115
+    servoMotor.write(115);
+    delay(500);
+
+    for (i=0;i<=3;i++)
+    {
+      //Avanza de 115 a 65, posición donde está el sensor de color. Ahí, se detiene con un delay de 500.
+      for(int i = 115; i > 65; i--) {
+        servoMotor.write(i);
+        delay(2);
+      }
+      delay(500);
+      
+      //Avanza de 65 a 29, posición donde está el agujero para que caiga el caramelo.
+      for(int i = 65; i > 29; i--) {
+        servoMotor.write(i);
+        delay(2);
+      } 
+      delay(200);
+      
+      //Vuelve a la posicion de 115, donde recoje otro caramelo.
+      for(int i = 29; i < 115; i++) {
+        servoMotor.write(i);
+        delay(2);
+      }
+     
+    }
+    servoMotor.detach();
+      
+   }else
+  {
+    Serial.print("Moneda inadecuada");
+    
+  }
+
+  delay(500);
+  }
+
+  int sensorcolor(){
+         // Definiendo la lectura de los fotodiodos con filtro rojo
+        digitalWrite(S2,LOW);
+        digitalWrite(S3,LOW);
+        
+        // Leyendo la frecuencia de salida del sensor
+        frecuenciaRojo = pulseIn(salidaSensor, LOW);
+       
+        // Mapeando el valor de la frecuencia del ROJO (RED = R) de 0 a 255
+        // Usted debe colocar los valores que registro. Este es un ejemplo: 
+        // colorRojo = map(frecuenciaRojo, 70, 120, 255,0);
+        colorRojo = map(frecuenciaRojo,70,120,255,0);
+        
+        // Mostrando por serie el valor para el rojo (R = Red)
+        Serial.print("R = ");
+        Serial.print(colorRojo);
+        delay(100);
+        
+        // Definiendo la lectura de los fotodiodos con filtro verde
+        digitalWrite(S2,HIGH);
+        digitalWrite(S3,HIGH);
+        
+        // Leyendo la frecuencia de salida del sensor
+        frecuenciaVerde = pulseIn(salidaSensor, LOW);
+       
+        // Mapeando el valor de la frecuencia del VERDE (GREEN = G) de 0 a 255
+        // Usted debe colocar los valores que registro. Este es un ejemplo: 
+        // ;
+      colorVerde = map(frecuenciaVerde, 100, 199, 255,0);
+       
+        // Mostrando por serie el valor para el verde (G = Green)
+        Serial.print("G = ");
+        Serial.print(colorVerde);
+        delay(100);
+       
+        // Definiendo la lectura de los fotodiodos con filtro azul
+        digitalWrite(S2,LOW);
+        digitalWrite(S3,HIGH);
+        
+        // Leyendo la frecuencia de salida del sensor
+        frecuenciaAzul = pulseIn(salidaSensor, LOW);
+       
+        // Mapeando el valor de la frecuencia del AZUL (AZUL = B) de 0 a 255
+        // Usted debe colocar los valores que registro. Este es un ejemplo: 
+        //
+       colorAzul = map(frecuenciaAzul, 38, 84, 255, 0);
+        
+        // Mostrando por serie el valor para el azul (B = Blue)
+        Serial.print("B = ");
+        Serial.print(colorAzul);
+        delay(100);
+       
+        // Comprobar cual es el color detectado y mostrarlo
+        // con un mensaje en el monitor serie
+        if(colorRojo > colorVerde && colorRojo > colorAzul){
+            Serial.println(" - Detectado ROJO");
+        }
+        if(colorVerde > colorRojo && colorVerde > colorAzul){
+          Serial.println(" - Detectado VERDE");
+        }
+        if(colorAzul > colorRojo && colorAzul > colorVerde){
+          Serial.println(" - Detectado AZUL");
+        }
+  }
