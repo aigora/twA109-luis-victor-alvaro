@@ -13,7 +13,6 @@ int main(void)
     	printf("Inroduzca un numero\n");
     	scanf("%d",&vector[i]);
 	}
-    printf("Inroduzca 3 numeros\n");
     escribir_fichero(vector);
 	return 0;
 }
