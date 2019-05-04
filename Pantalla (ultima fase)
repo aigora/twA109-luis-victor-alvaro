@@ -2,6 +2,7 @@
 #define COLS 16 // Columnas del LCD
 #define ROWS 2 // Filas del LCD
 #define VELOCIDAD 300 // Velocidad a la que se mueve el texto
+#define MAX 200
 
 LiquidCrystal lcd(12, 11, 5, 4, 3, 2);  //Pines que vamos a utilizar
 String Frase;
@@ -15,6 +16,12 @@ void loop() {
  
   // Obtenemos el tamaño del texto
   int tam_texto=Frase.length();
+  
+  char cadena[MAX];
+  
+  if(Serial.available()>0){
+    dato = Serial.read();
+  }
  
   // Mostramos entrada texto por la izquierda
   for(int i=tam_texto; i>0 ; i--)
