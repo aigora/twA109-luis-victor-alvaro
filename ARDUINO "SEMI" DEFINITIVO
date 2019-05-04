@@ -24,15 +24,15 @@ LiquidCrystal lcd(7, 6, 5, 4, 3, 2);  // pines RS, E, D3, D2, D1, D0 de modulo 1
 void setup() {
 Serial.begin(9600);
 balanza.begin(DOUT, CLK);
-  Serial.print("Lectura del valor del ADC:  ");
-  Serial.println(balanza.read());
-  Serial.println("No ponga ningun  objeto sobre la balanza");
-  Serial.println("Destarando...");
-  Serial.println("...");
+  // Serial.print("Lectura del valor del ADC:  ");
+  // Serial.println(balanza.read());
+  // Serial.println("No ponga ningun  objeto sobre la balanza");
+  // Serial.println("Destarando...");
+  // Serial.println("...");
   balanza.set_scale(439430.25); // Establecemos la escala
   balanza.tare(20);  //El peso actual es considerado Tara.
   
-  Serial.println("Listo para pesar");  
+  // Serial.println("Listo para pesar");  
 //declaramos el servomotor//
 
  
@@ -69,10 +69,10 @@ void loop() {
   lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
   lcd.print("moneda 1 EURO");     // imprime a continuacion abreviatura de segundos
 
-  Serial.print("Peso: ");
-  Serial.print(balanza.get_units(20),3);
-  Serial.println(" kg");
-  if(balanza.read()==0)
+  // Serial.print("Peso: ");
+  // Serial.print(balanza.get_units(20),3);
+  // Serial.println(" kg");
+  if(balanza.read()==7.5)
   { 
     //Empieza en 115
     servoMotor.write(115);
@@ -179,4 +179,70 @@ void loop() {
         if(colorAzul > colorRojo && colorAzul > colorVerde){
           Serial.println(" - Detectado AZUL");
         }
+        
+              // Obtenemos el tamaño del texto
+        int tam_texto=Frase.length();
+
+        char cadena[MAX];
+
+        if(Serial.available()>0){
+          dato = Serial.read();
+        }
+
+        // Mostramos entrada texto por la izquierda
+        for(int i=tam_texto; i>0 ; i--)
+        {
+          String texto = Frase.substring(i-1);
+
+          lcd.clear(); 
+
+          lcd.setCursor(0, 0);
+
+          lcd.print(texto);
+
+          delay(VELOCIDAD);
+        }
+
+        // Desplazamos el texto hacia la derecha
+        for(int i=1; i<=16;i++)
+        {
+          lcd.clear();
+
+          lcd.setCursor(i, 0);
+
+          lcd.print(Frase);
+
+          delay(VELOCIDAD);
+        }
+
+        // Desplazamos el texto hacia la izquierda en la segunda fila
+        for(int i=16;i>=1;i--)
+        {
+          lcd.clear();
+
+          lcd.setCursor(i, 1);
+
+          lcd.print(Frase);
+
+          delay(VELOCIDAD);
+        }
+
+        // Mostramos salida del texto por la izquierda
+        for(int i=1; i<=tam_texto ; i++)
+        {
+          String texto = Frase.substring(i-1);
+
+          lcd.clear();
+
+          //Situamos el cursor
+          lcd.setCursor(0, 1);
+
+          // Escribimos el texto
+          lcd.print(texto);
+
+          // Esperamos
+          delay(VELOCIDAD);
+        }
+      }
   }
+  
