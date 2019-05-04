@@ -8,6 +8,12 @@
 #define S3 11
 #define salidaSensor 10
 #include <LiquidCrystal.h>    // importa libreria
+#include <LiquidCrystal.h> 
+#define VELOCIDAD 300 // Velocidad a la que se mueve el texto
+#define MAX 200
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);  //Pines que vamos a utilizar
+String Frase;
 
 HX711 balanza;
 Servo servoMotor;
