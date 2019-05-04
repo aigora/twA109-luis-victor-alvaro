@@ -2,7 +2,7 @@
 
 Máquina expendedora tarot
 
-Maquina expendedora de caramelos de colores, esta maquina detectara el color de estos caramelos y signa una accion a cada combinacion de colores.
+Maquina expendedora de caramelos de colores, esta maquina detectara el color de estos caramelos y asigna una accion a cada combinacion de colores.
 
 ## Integrantes del equipo
 
@@ -20,7 +20,7 @@ Maquina expendedora de caramelos de colores, esta maquina detectara el color de 
 
 - 1 placa Arduino
 - Estructura de madera o carton
-- 3 servomotores
+- 2 servomotores
 - Detector o identificador de colores
 - Detector de peso
 - Pantalla de texto
