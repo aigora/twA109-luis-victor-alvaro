@@ -7,6 +7,7 @@
 #define S2 12
 #define S3 11
 #define salidaSensor 10
+#include <LiquidCrystal.h>    // importa libreria
 
 HX711 balanza;
 Servo servoMotor;
@@ -17,6 +18,7 @@ int frecuenciaAzul = 0;
 int colorRojo;
 int colorVerde;
 int colorAzul;
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);  // pines RS, E, D3, D2, D1, D0 de modulo 1602A
 
 
 void setup() {
@@ -55,9 +57,18 @@ balanza.begin(DOUT, CLK);
   // Definiendo la escala de frecuencia a 20%
   digitalWrite(S0,HIGH);
   digitalWrite(S1,LOW);
+  
+  lcd.begin(16, 2);     // inicializa a display de 16 columnas y 2 lineas
+  
 }
 
 void loop() {
+  
+  lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+  lcd.print("Introduzca");  // escribe el texto en pantalla
+  lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+  lcd.print("moneda 1 EURO");     // imprime a continuacion abreviatura de segundos
+
   Serial.print("Peso: ");
   Serial.print(balanza.get_units(20),3);
   Serial.println(" kg");
@@ -94,7 +105,11 @@ void loop() {
       
    }else
   {
-    Serial.print("Moneda inadecuada");
+    
+  lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+  lcd.print("Moneda");  // escribe el texto en pantalla
+  lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+  lcd.print("incorrecta");     // imprime a continuacion abreviatura de segundos
     
   }
 
