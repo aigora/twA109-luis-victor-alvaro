@@ -1,0 +1,73 @@
+#include <LiquidCrystal.h> 
+#define COLS 16 // Columnas del LCD
+#define ROWS 2 // Filas del LCD
+#define VELOCIDAD 300 // Velocidad a la que se mueve el texto
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);  //Pines que vamos a utilizar
+String Frase;
+ 
+void setup() {
+  Serial.begin(9600);
+  lcd.begin(COLS, ROWS);  // Configuramos las filas y las columnas del LCD en este caso 16 columnas y 2 filas
+}
+ 
+void loop() {
+ 
+  // Obtenemos el tamaño del texto
+  int tam_texto=Frase.length();
+ 
+  // Mostramos entrada texto por la izquierda
+  for(int i=tam_texto; i>0 ; i--)
+  {
+    String texto = Frase.substring(i-1);
+    
+    lcd.clear(); 
+    
+    lcd.setCursor(0, 0);
+ 
+    lcd.print(texto);
+ 
+    delay(VELOCIDAD);
+  }
+ 
+  // Desplazamos el texto hacia la derecha
+  for(int i=1; i<=16;i++)
+  {
+    lcd.clear();
+
+    lcd.setCursor(i, 0);
+ 
+    lcd.print(Frase);
+ 
+    delay(VELOCIDAD);
+  }
+ 
+  // Desplazamos el texto hacia la izquierda en la segunda fila
+  for(int i=16;i>=1;i--)
+  {
+    lcd.clear();
+ 
+    lcd.setCursor(i, 1);
+ 
+    lcd.print(Frase);
+ 
+    delay(VELOCIDAD);
+  }
+ 
+  // Mostramos salida del texto por la izquierda
+  for(int i=1; i<=tam_texto ; i++)
+  {
+    String texto = Frase.substring(i-1);
+ 
+    lcd.clear();
+ 
+    //Situamos el cursor
+    lcd.setCursor(0, 1);
+ 
+    // Escribimos el texto
+    lcd.print(texto);
+ 
+    // Esperamos
+    delay(VELOCIDAD);
+  }
+}
