@@ -2,18 +2,15 @@
 #define DOUT  A1
 #define CLK  A0
 #include <Servo.h>
-#define S0 8
-#define S1 9
-#define S2 12
-#define S3 11
-#define salidaSensor 10
-#include <LiquidCrystal.h>    // importa libreria
-#include <LiquidCrystal.h> 
-#define VELOCIDAD 300 // Velocidad a la que se mueve el texto
-#define MAX 200
-
-LiquidCrystal lcd(12, 11, 5, 4, 3, 2);  //Pines que vamos a utilizar
-String Frase;
+const int s0 = 8;  
+const int s1 = 9;  
+const int s2 = 12;  
+const int s3 = 11;  
+const int out = 10;    
+int rojo = 0;  
+int verde = 0;  
+int azul = 0; 
+#include <LiquidCrystal.h>  
 
 HX711 balanza;
 Servo servoMotor;
@@ -24,6 +21,8 @@ int frecuenciaAzul = 0;
 int colorRojo;
 int colorVerde;
 int colorAzul;
+int LED = 29;
+int LED1 = 27;
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);  // pines RS, E, D3, D2, D1, D0 de modulo 1602A
 
 
@@ -45,46 +44,56 @@ balanza.begin(DOUT, CLK);
    // Iniciamos el monitor serie para mostrar el resultado
  
   // Iniciamos el servo para que empiece a trabajar con el pin 9
-  servoMotor.attach(5);
+  servoMotor.attach(22);
  
-  // Inicializamos al ángulo 0 el servomotor
-  servoMotor.write(0);
+
+  servoMotor.write(115);
 
 
-    // Definiendo las Salidas
-  pinMode(S0, OUTPUT);
-  pinMode(S1, OUTPUT);
-  pinMode(S2, OUTPUT);
-  pinMode(S3, OUTPUT);
-  
-  // Definiendo salidaSensor como entrada
-  pinMode(salidaSensor, INPUT);
-  
-  // Definiendo la escala de frecuencia a 20%
-  digitalWrite(S0,HIGH);
-  digitalWrite(S1,LOW);
+ pinMode(s0,OUTPUT);  
+  pinMode(s1,OUTPUT);  
+  pinMode(s2,OUTPUT);  
+  pinMode(s3,OUTPUT);  
+  pinMode(out,INPUT);   
+  digitalWrite(s0,HIGH);  
+digitalWrite(s1,HIGH); 
   
   lcd.begin(16, 2);     // inicializa a display de 16 columnas y 2 lineas
+
   
+pinMode(LED, OUTPUT);
+pinMode(LED1, OUTPUT);
 }
 
 void loop() {
   
-  lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-  lcd.print("Introduzca");  // escribe el texto en pantalla
-  lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-  lcd.print("moneda 1 EURO");     // imprime a continuacion abreviatura de segundos
+digitalWrite(LED, LOW);
 
+digitalWrite(LED1, LOW);
+
+ lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+ lcd.print("Introduzca ");  // escribe el texto en pantalla
+ lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+ lcd.print("moneda 1 EURO."); // imprime a continuacion abreviatura de segundos
+ 
   // Serial.print("Peso: ");
   // Serial.print(balanza.get_units(20),3);
   // Serial.println(" kg");
-  if(balanza.read()==7.5)
+  if(balanza.read()==0)
   { 
     //Empieza en 115
     servoMotor.write(115);
     delay(500);
+    
+   digitalWrite(LED1, HIGH);
 
-    for (i=0;i<=3;i++)
+   lcd.clear();
+   lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+   lcd.print("Procesando...");  // escribe el texto en pantalla
+   lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 0
+   lcd.print("futuro...");  // escribe el texto en pantalla
+ 
+   for (i=0;i<=3;i++)
     {
       //Avanza de 115 a 65, posición donde está el sensor de color. Ahí, se detiene con un delay de 500.
       for(int i = 115; i > 65; i--) {
@@ -98,157 +107,71 @@ void loop() {
         servoMotor.write(i);
         delay(2);
       } 
-      delay(200);
+      delay(500);
       
       //Vuelve a la posicion de 115, donde recoje otro caramelo.
       for(int i = 29; i < 115; i++) {
         servoMotor.write(i);
         delay(2);
       }
-     
+     delay(500);
     }
     servoMotor.detach();
+    
       
    }else
   {
+   delay(5000);
+   
+   digitalWrite(LED, HIGH);
+
+   lcd.clear();
+   lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+   lcd.print("Moneda");  // escribe el texto en pantalla
+   lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+   lcd.print("incorrecta."); // imprime a continuacion abreviatura de segundos
+   delay(5000);
+  }
+
+  
+  }
+
+  int sensorcolor(){  
+  color(); 
+  Serial.print("   ");  
+  Serial.print(rojo, DEC);  
+  Serial.print("   ");  
+  Serial.print(verde, DEC);  
+  Serial.print("   ");  
+  Serial.print(azul, DEC);  
+
+  if (rojo < azul && verde > azul && rojo < 35) 
+  {  
+   Serial.println("   Rojo");    
+  }   
+  else if (azul < rojo && azul < verde && verde < rojo)  
+  {  
+   Serial.println("   Azul");        
+  }  
+
+  else if (rojo > verde && azul > verde )  
+  {  
+   Serial.println("   Verde");       
+  }  
+  else{
+  Serial.println("  ");  
+  }
+  delay(900);     
+  }  
     
-  lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-  lcd.print("Moneda");  // escribe el texto en pantalla
-  lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-  lcd.print("incorrecta");     // imprime a continuacion abreviatura de segundos
-    
-  }
-
-  delay(500);
-  }
-
-  int sensorcolor(){
-         // Definiendo la lectura de los fotodiodos con filtro rojo
-        digitalWrite(S2,LOW);
-        digitalWrite(S3,LOW);
-        
-        // Leyendo la frecuencia de salida del sensor
-        frecuenciaRojo = pulseIn(salidaSensor, LOW);
-       
-        // Mapeando el valor de la frecuencia del ROJO (RED = R) de 0 a 255
-        // Usted debe colocar los valores que registro. Este es un ejemplo: 
-        // colorRojo = map(frecuenciaRojo, 70, 120, 255,0);
-        colorRojo = map(frecuenciaRojo,70,120,255,0);
-        
-        // Mostrando por serie el valor para el rojo (R = Red)
-        Serial.print("R = ");
-        Serial.print(colorRojo);
-        delay(100);
-        
-        // Definiendo la lectura de los fotodiodos con filtro verde
-        digitalWrite(S2,HIGH);
-        digitalWrite(S3,HIGH);
-        
-        // Leyendo la frecuencia de salida del sensor
-        frecuenciaVerde = pulseIn(salidaSensor, LOW);
-       
-        // Mapeando el valor de la frecuencia del VERDE (GREEN = G) de 0 a 255
-        // Usted debe colocar los valores que registro. Este es un ejemplo: 
-        // ;
-      colorVerde = map(frecuenciaVerde, 100, 199, 255,0);
-       
-        // Mostrando por serie el valor para el verde (G = Green)
-        Serial.print("G = ");
-        Serial.print(colorVerde);
-        delay(100);
-       
-        // Definiendo la lectura de los fotodiodos con filtro azul
-        digitalWrite(S2,LOW);
-        digitalWrite(S3,HIGH);
-        
-        // Leyendo la frecuencia de salida del sensor
-        frecuenciaAzul = pulseIn(salidaSensor, LOW);
-       
-        // Mapeando el valor de la frecuencia del AZUL (AZUL = B) de 0 a 255
-        // Usted debe colocar los valores que registro. Este es un ejemplo: 
-        //
-       colorAzul = map(frecuenciaAzul, 38, 84, 255, 0);
-        
-        // Mostrando por serie el valor para el azul (B = Blue)
-        Serial.print("B = ");
-        Serial.print(colorAzul);
-        delay(100);
-       
-        // Comprobar cual es el color detectado y mostrarlo
-        // con un mensaje en el monitor serie
-        if(colorRojo > colorVerde && colorRojo > colorAzul){
-            Serial.println(" - Detectado ROJO");
-        }
-        if(colorVerde > colorRojo && colorVerde > colorAzul){
-          Serial.println(" - Detectado VERDE");
-        }
-        if(colorAzul > colorRojo && colorAzul > colorVerde){
-          Serial.println(" - Detectado AZUL");
-        }
-        
-              // Obtenemos el tamaño del texto
-        int tam_texto=Frase.length();
-
-        char cadena[MAX];
-
-        if(Serial.available()>0){
-          dato = Serial.read();
-        }
-
-        // Mostramos entrada texto por la izquierda
-        for(int i=tam_texto; i>0 ; i--)
-        {
-          String texto = Frase.substring(i-1);
-
-          lcd.clear(); 
-
-          lcd.setCursor(0, 0);
-
-          lcd.print(texto);
-
-          delay(VELOCIDAD);
-        }
-
-        // Desplazamos el texto hacia la derecha
-        for(int i=1; i<=16;i++)
-        {
-          lcd.clear();
-
-          lcd.setCursor(i, 0);
-
-          lcd.print(Frase);
-
-          delay(VELOCIDAD);
-        }
-
-        // Desplazamos el texto hacia la izquierda en la segunda fila
-        for(int i=16;i>=1;i--)
-        {
-          lcd.clear();
-
-          lcd.setCursor(i, 1);
-
-          lcd.print(Frase);
-
-          delay(VELOCIDAD);
-        }
-
-        // Mostramos salida del texto por la izquierda
-        for(int i=1; i<=tam_texto ; i++)
-        {
-          String texto = Frase.substring(i-1);
-
-          lcd.clear();
-
-          //Situamos el cursor
-          lcd.setCursor(0, 1);
-
-          // Escribimos el texto
-          lcd.print(texto);
-
-          // Esperamos
-          delay(VELOCIDAD);
-        }
-      }
-  }
+void color()  
+{    
+  digitalWrite(s2, LOW);  
+  digitalWrite(s3, LOW);   
+  rojo = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
+  digitalWrite(s3, HIGH);   
+  azul = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
+  digitalWrite(s2, HIGH);    
+  verde = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
+}
   
