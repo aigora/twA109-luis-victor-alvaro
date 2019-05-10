@@ -153,12 +153,14 @@ digitalWrite(LED1, LOW);
   }   
   else if (azul < rojo && azul < verde && verde < rojo)  
   {  
-   Serial.println("   Azul");        
+   Serial.println("   Azul"); 
+   vector[n] = 2;
   }  
 
   else if (rojo > verde && azul > verde )  
   {  
-   Serial.println("   Verde");       
+   Serial.println("   Verde");
+   vector[n] = 3;
   }  
   else{
   Serial.println("  ");  
