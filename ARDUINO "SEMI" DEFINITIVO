@@ -100,6 +100,7 @@ digitalWrite(LED1, LOW);
         servoMotor.write(i);
         delay(2);
       }
+      colores[i]=sensorcolor();
       delay(500);
       
       //Avanza de 65 a 29, posición donde está el agujero para que caiga el caramelo.
@@ -136,7 +137,7 @@ digitalWrite(LED1, LOW);
   
   }
 
-  int sensorcolor(){  
+  int sensorcolor(int n, int vector[] ){  
   color(); 
   Serial.print("   ");  
   Serial.print(rojo, DEC);  
@@ -147,7 +148,8 @@ digitalWrite(LED1, LOW);
 
   if (rojo < azul && verde > azul && rojo < 35) 
   {  
-   Serial.println("   Rojo");    
+   //Serial.println("   Rojo");
+   vector[n] = 1;
   }   
   else if (azul < rojo && azul < verde && verde < rojo)  
   {  
