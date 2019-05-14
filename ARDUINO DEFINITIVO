@@ -1,0 +1,523 @@
+#include <Key.h>
+#include <Keypad.h>
+
+
+#include <Servo.h>
+const int s0 = 8;  
+const int s1 = 9;  
+const int s2 = 12;  
+const int s3 = 11;  
+const int out = 10;    
+int rojo = 0;  
+int verde = 0;  
+int azul = 0;
+int vector[3];
+#include <LiquidCrystal.h>  
+Servo servoMotor;
+int i;
+int LED = 29;
+int LED1 = 27;
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);  // pines RS, E, D3, D2, D1, D0 de modulo 1602A
+
+const byte FILAS = 4; 
+const byte COLS = 4; //cuatro columnas 
+int delay1=3000; // valor de delay
+// pin 11 EN pin , D4=9 , D5=8 , D6=7 , D7=6
+int c=0; // flag1 used to check The Password
+int error=0; //flag3 Check if Invalid Password it Reached Specific Value
+char keys[FILAS][COLS] =
+ {{'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'}}; // Keypad Form
+  
+char pass[]={'A','B','C','D','#','*'}; // Contraseña
+char newpass[6];  // Cadena que contendra la nueva contraseña
+byte filPins[FILAS] = {
+  31, 33, 35, 37}; //connect to the row pinouts of the keypad
+byte colPins[COLS] = {
+  39, 41, 43, 45}; //connect to the column pinouts of the keypad
+int count=0;
+int f=0; // to Enter Clear Display one time
+Keypad keypad = Keypad( makeKeymap(keys), filPins, colPins, FILAS, COLS );
+
+
+
+void setup() {
+Serial.begin(9600);
+
+  servoMotor.attach(22);
+ 
+
+  servoMotor.write(115);
+
+
+ pinMode(s0,OUTPUT);  
+  pinMode(s1,OUTPUT);  
+  pinMode(s2,OUTPUT);  
+  pinMode(s3,OUTPUT);  
+  pinMode(out,INPUT);   
+  digitalWrite(s0,HIGH);  
+digitalWrite(s1,HIGH); 
+  
+  lcd.begin(16, 2);     // inicializa a display de 16 columnas y 2 lineas
+
+  
+pinMode(LED, OUTPUT);
+pinMode(LED1, OUTPUT);
+
+  lcd.begin(16, 2);
+     lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("  Introduzca la");
+    lcd.setCursor(0,1);
+    lcd.print("     clave");
+  delay(delay1);
+}
+
+void loop()
+{
+
+  char key = keypad.getKey();
+  if(key != NO_KEY&&i<6)
+  {
+    if(f==0)
+    {
+      lcd.clear(); // Vacia la pantalla
+      f=1;
+    }
+   lcd.setCursor(0,0);
+   lcd.print("Clave:");
+   lcd.setCursor(i,1);
+   lcd.print("*");  // Escribe '*' para cada caracter 
+   newpass[i]=key;
+   if(newpass[i]==pass[i])c++;
+   i++;
+  }
+  
+  if(c==6)
+  {
+    { 
+    //Empieza en 115
+    servoMotor.write(150);
+    delay(500);
+    
+   digitalWrite(LED1, HIGH);
+
+   lcd.clear();
+   lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+   lcd.print("Procesando");  // escribe el texto en pantalla
+   lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+   lcd.print("futuro...");  // escribe el texto en pantalla
+ 
+   for (i=0;i<3;i++)
+    {
+      //Avanza de 115 a 65, posición donde está el sensor de color. Ahí, se detiene con un delay de 500.
+      for(int i = 150; i > 65; i--) {
+        servoMotor.write(i);
+        delay(2);
+      }
+      sensorcolor(vector,i);
+      delay(500);
+      
+      //Avanza de 65 a 29, posición donde está el agujero para que caiga el caramelo.
+      for(int i = 65; i > 29; i--) {
+        servoMotor.write(i);
+        delay(2);
+      }
+      delay(500);
+      
+      //Vuelve a la posicion de 115, donde recoje otro caramelo.
+      for(int i = 29; i < 150; i++) {
+        servoMotor.write(i);
+        delay(2);
+      }
+       
+    delay(500);
+
+    
+    }
+    servoMotor.detach(); 
+    mensaje(vector);
+
+    
+   }
+    char newpass[]={'0','0','0','0','0','0'}; // Limpia el valor de Password introducida por el usuario
+    print1();
+    c=0;
+    i=0;
+    f=0;
+  }else if(c<6&&i==6)//Funcion Password invalida
+  {
+    digitalWrite(LED, HIGH);
+    delay(500);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Clave incorrecta");
+    delay(1000);
+    i=0;
+    c=0;
+    error++;
+    if(error<5)
+    {
+      print1();
+    }
+    f=0;
+  }
+
+  
+  
+}
+
+  int sensorcolor(int vector[],int i){  
+  color(); 
+  Serial.print("   ");  
+  Serial.print(rojo, DEC);  
+  Serial.print("   ");  
+  Serial.print(verde, DEC);  
+  Serial.print("   ");  
+  Serial.print(azul, DEC);  
+
+  if (rojo < azul && verde > azul && rojo < 25) 
+  {  
+   Serial.println("   Rojo"); 
+   vector[i]=1;   
+  }   
+  else if (azul < rojo && azul < verde && verde < rojo)  
+  {  
+   Serial.println("   Azul");
+   vector[i]=3;        
+  }  
+
+  else if (rojo > verde && azul > verde )  
+  {  
+   Serial.println("   Verde");       
+  vector[i]=2;
+  }  
+  else{
+  Serial.println("  ");  
+  }
+  delay(900);     
+  }  
+    
+void color()  
+{    
+  digitalWrite(s2, LOW);  
+  digitalWrite(s3, LOW);   
+  rojo = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
+  digitalWrite(s3, HIGH);   
+  azul = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
+  digitalWrite(s2, HIGH);    
+  verde = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
+}
+
+int mensaje(int combinacion[])
+{
+  //rojo==1,verde==2,azul==3//
+  switch (combinacion[0])
+  {
+    case 1:
+    {
+      switch (combinacion[1])
+      {
+        case 1: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                 Serial.print("RRR");
+                 lcd.clear();
+                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                 lcd.print("rojo");  // escribe el texto en pantalla
+                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                 lcd.print("rojo rojo");
+                 break;
+                 
+            case 2:
+                Serial.print("RRV"); //ROJO ROJO VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("rojo verde"); 
+                break;
+                
+            case 3: 
+               Serial.print("RRA"); //ROJO ROJO AZUL
+               lcd.clear();
+               lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+               lcd.print("rojo");  // escribe el texto en pantalla
+               lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+               lcd.print("rojo azul"); 
+               break;
+          }
+          break;
+          }
+        case 2: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                Serial.print("RVR"); //ROJO VERDE ROJO
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde rojo"); 
+                break;
+            case 2: 
+                Serial.print("RVV"); //ROJO VERDE VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde verde");
+                break;
+            case 3: 
+                Serial.print("RVA"); //ROJO VERDE AZUL
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde azul");
+                break;
+          }
+          break;
+          }
+        case 3: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                printf("RAR"); //ROJO AZUL ROJO
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul rojo");
+                break;
+            case 2: 
+                printf("RAV"); //ROJO AZUL VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul verde");
+                break;
+            case 3: 
+                printf("RAA"); //ROJO AZUL AZUL
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul azul");
+                break;
+          }
+          break;   
+        }
+      }
+      break;
+    }
+      case 2:
+    {
+      switch (combinacion[1])
+      {
+        case 1: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                Serial.print("VRR"); //VERDE ROJO ROJO
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("rojo rojo");
+                
+                break;
+            case 2: 
+                Serial.print("VRV"); //VERDE ROJO VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("rojo verde");
+                break;
+            case 3: 
+                Serial.print("VRA"); //VERDE ROJO AZUL
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("rojo azul");
+                break;
+          }
+          break;
+          }
+        case 2: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                Serial.print("VVR"); //VERDE VERDE ROJO
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde rojo");
+                break;
+            case 2: 
+                Serial.print("VVV"); //VERDE VERDE VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde verde");
+                break;
+            case 3: 
+                Serial.print("VVA"); //VERDE VERDE AZUL
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde azul");
+                break;
+          }
+          break;
+          }
+        case 3: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                Serial.print("VAR"); //VERDE AZUL ROJO
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul rojo");
+                break;
+            case 2: 
+                Serial.print("VAV"); //VERDE AZUL VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul verde");
+                break;
+            case 3: 
+                Serial.print("VAA"); //VERDE AZUL AZUL
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul azul");
+                break;
+          } 
+          break;  
+        }
+      }
+      break;
+    }
+    case 3:
+    {
+      switch (combinacion[1])
+      {
+        case 1: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                Serial.print("ARR"); //AZUL ROJO ROJO
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("rojo rojo");
+                break;
+            case 2: 
+                Serial.print("ARV"); //AZUL ROJO VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("rojo verde");
+                break;
+            case 3: 
+                Serial.print("ARA"); //AZUL ROJO AZUL
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("rojo azul");
+                break;
+          }
+          break;
+          }
+        case 2: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                Serial.print("AVR"); //AZUL VERDE ROJO
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde rojo");
+                break;
+            case 2: 
+                Serial.print("AVV"); //AZUL VERDE VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde verde");
+                break;
+            case 3: 
+                Serial.print("AVA"); //AZUL VERDE AZUL
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("verde azul");
+                break;
+          }
+          break;
+          }
+        case 3: 
+        {
+          switch (combinacion[2])
+          {
+            case 1: 
+                Serial.print("AAR"); //AZUL AZUL ROJO
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul rojo");
+                break;
+            case 2: 
+                Serial.print("AAV"); //AZUL AZUL VERDE
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul verde");
+                break;
+            case 3: 
+                Serial.print("AAA"); //AZUL AZUL AZUL
+                lcd.clear();
+                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+                lcd.print("azul azul");
+                break;
+          }
+          break;   
+        }
+      }
+      break;
+    }
+  }
+}
