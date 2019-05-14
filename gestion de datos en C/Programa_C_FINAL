@@ -5,7 +5,7 @@
 #define MAX_DATA_LENGTH 255
 // Funciones prototipo
 void autoConnect(SerialPort *arduino,char*);
-void escribir_fichero(char[]);
+void escribir_fichero(char[], FILE*);
 int main(void)
 {
 	//Arduino SerialPort object
@@ -25,6 +25,7 @@ void autoConnect(SerialPort *arduino,char *incomingData)
 {
     int readResult;
     int i;
+    FILE *salida;
     char cadena[MAX_DATA_LENGTH];
     // Espera la conexión con Arduino
     while (!isConnected(arduino))
@@ -40,36 +41,35 @@ void autoConnect(SerialPort *arduino,char *incomingData)
     // Bucle de la aplicación
     while (isConnected(arduino))
     {
-        strcpy(cadena, incomingData);
-		//cadena[i]= readSerialPort(arduino,incomingData,MAX_DATA_LENGTH);
-        escribir_fichero(cadena);
+        salida=fopen("Caramelos.txt","wt");
+		strcpy(cadena, incomingData);
+        if (salida==NULL)
+	        printf("No se han podido guardar los datos\n");
+	    else
+	        {
+	        	escribir_fichero(cadena, salida);
+			}
     }   
+    fclose(salida);
     if (!isConnected(arduino))
         printf ("Se ha perdido la conexión con Arduino\n");
 }
-void escribir_fichero(char cadena[])
+void escribir_fichero(char cadena[], FILE *salida)
 {
 	int j;
-	FILE *salida;
-	salida=fopen("Caramelos.txt","wt");
-	if (salida==NULL)
-	    printf("No se han podido guardar los datos\n");
-	else
+	for(j=0;j<3;j++)
 	{
-		for(j=0;j<3;j++)
+		switch (cadena[j])
 		{
-			switch (cadena[j])
-			{
-				case 'R': 
-				    fprintf(salida,"ROJO\n");
-				    break;
-				case 'V': 
-				    fprintf(salida,"VERDE\n");
-				    break;
-				case 'A': 
-				    fprintf(salida,"AZUL\n");
-				    break;
-			}
-	    }
-	}
+			case 'R': 
+			    fprintf(salida,"ROJO\n");
+			    break;
+			case 'V': 
+			    fprintf(salida,"VERDE\n");
+			    break;
+			case 'A': 
+			    fprintf(salida,"AZUL\n");
+			    break;
+		}
+    }
 }
