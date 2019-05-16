@@ -263,29 +263,30 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
+                 Serial.print("RRR");
                  lcd.clear();
                  lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                 lcd.print("rojo");  // escribe el texto en pantalla
+                 lcd.print("Yo que tu no ");  // escribe el texto en pantalla
                  lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                 lcd.print("rojo rojo"); // imprime a continuacion abreviatura de segundos
+                 lcd.print("saldria hoy");
                  break;
                  
             case 2:
-                Serial.print(" RRV "); //ROJO ROJO VERDE
+                Serial.print("RRV"); //ROJO ROJO VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.print("Todo lo malo");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo verde"); // imprime a continuacion abreviatura de segundos
+                lcd.print("desaparecera");
                 break;
                 
             case 3: 
-               Serial.print(" RRA "); //ROJO ROJO AZU
+               Serial.print("RRA"); //ROJO ROJO AZUL
                lcd.clear();
                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-               lcd.print("rojo");  // escribe el texto en pantalla
+               lcd.print("Mejorara, pero");  // escribe el texto en pantalla
                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-               lcd.print("rojo azul"); // imprime a continuacion abreviatura de segundos
+               lcd.print("tampoco mucho");
                break;
           }
           break;
@@ -295,28 +296,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print(" RVR "); //ROJO VERDE ROJO
+                Serial.print("RVR"); //ROJO VERDE ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.print("Parece que mejo-");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde rojo"); // imprime a continuacion abreviatura de segundos
+                lcd.print("ra, pero no");
                 break;
             case 2: 
-                Serial.print(" RVV "); //ROJO VERDE VERDE
+                Serial.print("RVV"); //ROJO VERDE VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.print("Todo castigo ");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde verde"); // imprime a continuacion abreviatura de segundos 
+                lcd.print("tiene recompensa"); 
                 break;
             case 3: 
-                Serial.print(" RVA "); //ROJO VERDE AZUL
+                Serial.print("RVA"); //ROJO VERDE AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.print("Si pones de tu");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde azul"); // imprime a continuacion abreviatura de segundos
+                lcd.print("parte, ira bien");
                 break;
           }
           break;
@@ -326,28 +327,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                printf(" RAR "); //ROJO AZUL ROJO
+                printf("RAR"); //ROJO AZUL ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.print("Por mucho que es");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul rojo"); // imprime a continuacion abreviatura de segundos
+                lcd.print("capes,te pillara");
                 break;
             case 2: 
-                printf(" RAV "); //ROJO AZUL VERDE
+                printf("RAV"); //ROJO AZUL VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.print("Todo mejorara a ");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul verde"); // imprime a continuacion abreviatura de segundos
+                lcd.print("su debido tiempo");
                 break;
             case 3: 
-                printf(" RAA "); //ROJO AZUL AZUL
+                printf("RAA"); //ROJO AZUL AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("rojo");  // escribe el texto en pantalla
+                lcd.print("Nadie arriesga,");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul azul"); // imprime a continuacion abreviatura de segundos
+                lcd.print("tu debes hacerlo");
                 break;
           }
           break;   
@@ -364,29 +365,29 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print(" VRR"); //VERDE ROJO ROJO
+                Serial.print("VRR"); //VERDE ROJO ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Tu suerte ");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo rojo"); // imprime a continuacion abreviatura de segundos
+                lcd.print("se ha acabado");
                 
                 break;
             case 2: 
-                Serial.print(" VRV "); //VERDE ROJO VERDE
+                Serial.print("VRV"); //VERDE ROJO VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Se constante");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo verde"); // imprime a continuacion abreviatura de segundos
+                lcd.print("y venceras");
                 break;
             case 3: 
-                Serial.print(" VRA "); //VERDE ROJO AZUL
+                Serial.print("VRA"); //VERDE ROJO AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Que si, que no,");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo azul"); // imprime a continuacion abreviatura de segundos
+                lcd.print("decidete tio");
                 break;
           }
           break;
@@ -396,28 +397,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print(" VVR "); //VERDE VERDE ROJO
+                Serial.print("VVR"); //VERDE VERDE ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Niño mimado,");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde rojo"); // imprime a continuacion abreviatura de segundos
+                lcd.print("viene tormenta");
                 break;
             case 2: 
-                Serial.print(" VVV "); //VERDE VERDE VERDE
+                Serial.print("VVV"); //VERDE VERDE VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Seras el **** ");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde verde"); // imprime a continuacion abreviatura de segundos
+                lcd.print("amo");
                 break;
             case 3: 
-                Serial.print(" VVA "); //VERDE VERDE AZUL
+                Serial.print("VVA"); //VERDE VERDE AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Mas te vale po-");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde azul"); // imprime a continuacion abreviatura de segundos
+                lcd.print("nerte a estudiar");
                 break;
           }
           break;
@@ -427,28 +428,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print(" VAR "); //VERDE AZUL ROJO
+                Serial.print("VAR"); //VERDE AZUL ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Todo desaparece-");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul rojo"); // imprime a continuacion abreviatura de segundos
+                lcd.print("ra lentamente");
                 break;
             case 2: 
-                Serial.print(" VAV "); //VERDE AZUL VERDE
+                Serial.print("VAV"); //VERDE AZUL VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Aunque todo vaya");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul verde"); // imprime a continuacion abreviatura de segundos
+                lcd.print("bien, controla");
                 break;
             case 3: 
-                Serial.print(" VAA "); //VERDE AZUL AZUL
+                Serial.print("VAA"); //VERDE AZUL AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("verde");  // escribe el texto en pantalla
+                lcd.print("Todo ira bien,");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul azul"); // imprime a continuacion abreviatura de segundos
+                lcd.print("si tu quieres");
                 break;
           } 
           break;  
@@ -465,28 +466,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print(" ARR "); //AZUL ROJO ROJO
+                Serial.print("ARR"); //AZUL ROJO ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Para que empezar,");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo rojo"); // imprime a continuacion abreviatura de segundos
+                lcd.print("si saldra mal");
                 break;
             case 2: 
-                Serial.print(" ARV "); //AZUL ROJO VERDE
+                Serial.print("ARV"); //AZUL ROJO VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Resurgiras de");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo verde"); // imprime a continuacion abreviatura de segundos
+                lcd.print("tus cenizas");
                 break;
             case 3: 
-                Serial.print(" ARA"); //AZUL ROJO AZUL
+                Serial.print("ARA"); //AZUL ROJO AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Vida complicada,");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo azul"); // imprime a continuacion abreviatura de segundos
+                lcd.print("pero tu puedes");
                 break;
           }
           break;
@@ -496,28 +497,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print(" AVR "); //AZUL VERDE ROJO
+                Serial.print("AVR"); //AZUL VERDE ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Cuando lo hayas");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde rojo"); // imprime a continuacion abreviatura de segundos
+                lcd.print("arreglado, caera");
                 break;
             case 2: 
-                Serial.print(" AVV "); //AZUL VERDE VERDE
+                Serial.print("AVV"); //AZUL VERDE VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Pronto comenzara");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde verde"); // imprime a continuacion abreviatura de segundos
+                lcd.print("tu racha");
                 break;
             case 3: 
-                Serial.print(" AVA "); //AZUL VERDE AZUL
+                Serial.print("AVA"); //AZUL VERDE AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Vendran sorpre-");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde azul"); // imprime a continuacion abreviatura de segundos
+                lcd.print("sas agradables");
                 break;
           }
           break;
@@ -527,28 +528,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print(" AAR "); //AZUL AZUL ROJO
+                Serial.print("AAR"); //AZUL AZUL ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Todo lo que pue-");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul rojo"); // imprime a continuacion abreviatura de segundos
+                lcd.print("da ir mal,lo ira");
                 break;
             case 2: 
-                Serial.print(" AAV "); //AZUL AZUL VERDE
+                Serial.print("AAV"); //AZUL AZUL VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Todo loque pue");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul verde"); // imprime a continuacion abreviatura de segundos
+                lcd.print("da ir bien lo ira");
                 break;
             case 3: 
-                Serial.print(" AAA "); //AZUL AZUL AZUL
+                Serial.print("AAA"); //AZUL AZUL AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
-                lcd.print("azul");  // escribe el texto en pantalla
+                lcd.print("Futuro demasiado");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul azul"); // imprime a continuacion abreviatura de segundos
+                lcd.print("incierto");
                 break;
           }
           break;   
