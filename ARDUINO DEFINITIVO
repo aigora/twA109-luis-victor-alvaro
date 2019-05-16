@@ -8,8 +8,8 @@ const int s1 = 9;
 const int s2 = 12;  
 const int s3 = 11;  
 const int out = 10;    
-int rojo = 0;  
-int verde = 0;  
+int rojo =0;  
+int verde =0;  
 int azul = 0;
 int vector[3];
 #include <LiquidCrystal.h>  
@@ -18,10 +18,11 @@ int i;
 int LED = 29;
 int LED1 = 27;
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);  // pines RS, E, D3, D2, D1, D0 de modulo 1602A
-
+int clr=0;
+int frequency=0;
 const byte FILAS = 4; 
-const byte COLS = 4; //cuatro columnas 
-int delay1=3000; // valor de delay
+const byte COLS = 4; //four columns 
+int delay1=3000; // Delay Value are used
 // pin 11 EN pin , D4=9 , D5=8 , D6=7 , D7=6
 int c=0; // flag1 used to check The Password
 int error=0; //flag3 Check if Invalid Password it Reached Specific Value
@@ -31,8 +32,8 @@ char keys[FILAS][COLS] =
   {'7','8','9','C'},
   {'*','0','#','D'}}; // Keypad Form
   
-char pass[]={'A','B','C','D','#','*'}; // Contraseña
-char newpass[6];  // Cadena que contendra la nueva contraseña
+char pass[]={'0','0','0','0','0','0'}; // The Password 
+char newpass[6];  // New Array That's Carried The typed Password
 byte filPins[FILAS] = {
   31, 33, 35, 37}; //connect to the row pinouts of the keypad
 byte colPins[COLS] = {
@@ -49,16 +50,17 @@ Serial.begin(9600);
   servoMotor.attach(22);
  
 
-  servoMotor.write(115);
+  servoMotor.write(150);
 
 
- pinMode(s0,OUTPUT);  
-  pinMode(s1,OUTPUT);  
-  pinMode(s2,OUTPUT);  
-  pinMode(s3,OUTPUT);  
-  pinMode(out,INPUT);   
-  digitalWrite(s0,HIGH);  
-digitalWrite(s1,HIGH); 
+pinMode(s0, OUTPUT);
+      pinMode(s1, OUTPUT);
+      pinMode(s2, OUTPUT);
+      pinMode(s3, OUTPUT);
+      pinMode(out, INPUT);
+      // Setting frequency-scaling to 20%
+      digitalWrite(s0, HIGH);
+      digitalWrite(s1, LOW);
   
   lcd.begin(16, 2);     // inicializa a display de 16 columnas y 2 lineas
 
@@ -75,6 +77,19 @@ pinMode(LED1, OUTPUT);
   delay(delay1);
 }
 
+ void print1()
+ {
+  pinMode(LED, LOW);
+pinMode(LED1,LOW);
+   // it's Function Using to Display The Password Screen
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(" Introduzca la");
+    lcd.setCursor(0,1);
+    lcd.print("     clave");
+    
+ }
+
 void loop()
 {
 
@@ -83,13 +98,14 @@ void loop()
   {
     if(f==0)
     {
-      lcd.clear(); // Vacia la pantalla
+      lcd.clear(); // Clear Everything On the LCD
       f=1;
     }
+   lcd.clear();
    lcd.setCursor(0,0);
    lcd.print("Clave:");
    lcd.setCursor(i,1);
-   lcd.print("*");  // Escribe '*' para cada caracter 
+   lcd.print("*");  // Display '*' For Every Charachter 
    newpass[i]=key;
    if(newpass[i]==pass[i])c++;
    i++;
@@ -99,7 +115,7 @@ void loop()
   {
     { 
     //Empieza en 115
-    servoMotor.write(150);
+    servoMotor.write(140);
     delay(500);
     
    digitalWrite(LED1, HIGH);
@@ -107,13 +123,13 @@ void loop()
    lcd.clear();
    lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
    lcd.print("Procesando");  // escribe el texto en pantalla
-   lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
+   lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 0
    lcd.print("futuro...");  // escribe el texto en pantalla
  
    for (i=0;i<3;i++)
     {
       //Avanza de 115 a 65, posición donde está el sensor de color. Ahí, se detiene con un delay de 500.
-      for(int i = 150; i > 65; i--) {
+      for(int i = 140; i > 65; i--) {
         servoMotor.write(i);
         delay(2);
       }
@@ -128,7 +144,7 @@ void loop()
       delay(500);
       
       //Vuelve a la posicion de 115, donde recoje otro caramelo.
-      for(int i = 29; i < 150; i++) {
+      for(int i = 29; i < 14 0; i++) {
         servoMotor.write(i);
         delay(2);
       }
@@ -137,17 +153,17 @@ void loop()
 
     
     }
-    servoMotor.detach(); 
+     
     mensaje(vector);
-
+    delay(5000);
     
    }
-    char newpass[]={'0','0','0','0','0','0'}; // Limpia el valor de Password introducida por el usuario
+    char newpass[]={'0','0','0','0','0','0'}; // Clear The Value of password entered by user.
     print1();
     c=0;
     i=0;
     f=0;
-  }else if(c<6&&i==6)//Funcion Password invalida
+  }else if(c<6&&i==6)//Invalid Password Function
   {
     digitalWrite(LED, HIGH);
     delay(500);
@@ -158,11 +174,7 @@ void loop()
     i=0;
     c=0;
     error++;
-    if(error<5)
-    {
-      print1();
-    }
-    f=0;
+    print1();
   }
 
   
@@ -170,46 +182,72 @@ void loop()
 }
 
   int sensorcolor(int vector[],int i){  
-  color(); 
-  Serial.print("   ");  
-  Serial.print(rojo, DEC);  
-  Serial.print("   ");  
-  Serial.print(verde, DEC);  
-  Serial.print("   ");  
-  Serial.print(azul, DEC);  
+  clr = readColor();
+      delay(10);  
+      switch (clr) {
+        case 1:
+        Serial.print("ROJO");
+        vector[i]=1; 
+        break;
+        case 3:
+        Serial.print("verde");
+        vector[i]=2; 
+        break;
+        default:
+        Serial.print("AZUL");
+        vector[i]=3;  
+      }
+  } 
 
-  if (rojo < azul && verde > azul && rojo < 25) 
-  {  
-   Serial.println("   Rojo"); 
-   vector[i]=1;   
-  }   
-  else if (azul < rojo && azul < verde && verde < rojo)  
-  {  
-   Serial.println("   Azul");
-   vector[i]=3;        
-  }  
 
-  else if (rojo > verde && azul > verde )  
-  {  
-   Serial.println("   Verde");       
-  vector[i]=2;
-  }  
-  else{
-  Serial.println("  ");  
-  }
-  delay(900);     
-  }  
-    
-void color()  
-{    
-  digitalWrite(s2, LOW);  
-  digitalWrite(s3, LOW);   
-  rojo = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
-  digitalWrite(s3, HIGH);   
-  azul = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
-  digitalWrite(s2, HIGH);    
-  verde = pulseIn(out, digitalRead(out) == HIGH ? LOW : HIGH);  
-}
+
+    int readColor() {
+      // Setting red filtered photodiodes to be read
+      digitalWrite(s2, LOW);
+      digitalWrite(s3, LOW);
+      // Reading the output frequency
+      frequency = pulseIn(out, LOW);
+      int R = frequency;
+      // Printing the value on the serial monitor
+      Serial.print("R= ");//printing name
+      Serial.print(frequency);//printing RED color frequency
+      Serial.print("  ");
+      delay(50);
+      // Setting Green filtered photodiodes to be read
+      digitalWrite(s2, HIGH);
+      digitalWrite(s3, HIGH);
+      // Reading the output frequency
+      frequency = pulseIn(out, LOW);
+      int G = frequency;
+      // Printing the value on the serial monitor
+      Serial.print("G= ");//printing name
+      Serial.print(frequency);//printing RED color frequency
+      Serial.print("  ");
+      delay(50);
+      // Setting Blue filtered photodiodes to be read
+      digitalWrite(s2, LOW);
+      digitalWrite(s3, HIGH);
+      // Reading the output frequency
+      frequency = pulseIn(out, LOW);
+      int B = frequency;
+      // Printing the value on the serial monitor
+      Serial.print("B= ");//printing name
+      Serial.print(frequency);//printing RED color frequency
+      Serial.println("  ");
+      delay(50);
+      if(R==21 || R== 23){
+        clr=1;
+      }
+
+      
+      if(R==22){
+        clr = 3; // Green
+
+      }
+      return clr;  
+    }
+
+
 
 int mensaje(int combinacion[])
 {
@@ -225,30 +263,29 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                 Serial.print("RRR");
                  lcd.clear();
                  lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                  lcd.print("rojo");  // escribe el texto en pantalla
                  lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                 lcd.print("rojo rojo");
+                 lcd.print("rojo rojo"); // imprime a continuacion abreviatura de segundos
                  break;
                  
             case 2:
-                Serial.print("RRV"); //ROJO ROJO VERDE
+                Serial.print(" RRV "); //ROJO ROJO VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("rojo");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo verde"); 
+                lcd.print("rojo verde"); // imprime a continuacion abreviatura de segundos
                 break;
                 
             case 3: 
-               Serial.print("RRA"); //ROJO ROJO AZUL
+               Serial.print(" RRA "); //ROJO ROJO AZU
                lcd.clear();
                lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                lcd.print("rojo");  // escribe el texto en pantalla
                lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-               lcd.print("rojo azul"); 
+               lcd.print("rojo azul"); // imprime a continuacion abreviatura de segundos
                break;
           }
           break;
@@ -258,28 +295,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print("RVR"); //ROJO VERDE ROJO
+                Serial.print(" RVR "); //ROJO VERDE ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("rojo");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde rojo"); 
+                lcd.print("verde rojo"); // imprime a continuacion abreviatura de segundos
                 break;
             case 2: 
-                Serial.print("RVV"); //ROJO VERDE VERDE
+                Serial.print(" RVV "); //ROJO VERDE VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("rojo");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde verde");
+                lcd.print("verde verde"); // imprime a continuacion abreviatura de segundos 
                 break;
             case 3: 
-                Serial.print("RVA"); //ROJO VERDE AZUL
+                Serial.print(" RVA "); //ROJO VERDE AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("rojo");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde azul");
+                lcd.print("verde azul"); // imprime a continuacion abreviatura de segundos
                 break;
           }
           break;
@@ -289,28 +326,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                printf("RAR"); //ROJO AZUL ROJO
+                printf(" RAR "); //ROJO AZUL ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("rojo");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul rojo");
+                lcd.print("azul rojo"); // imprime a continuacion abreviatura de segundos
                 break;
             case 2: 
-                printf("RAV"); //ROJO AZUL VERDE
+                printf(" RAV "); //ROJO AZUL VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("rojo");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul verde");
+                lcd.print("azul verde"); // imprime a continuacion abreviatura de segundos
                 break;
             case 3: 
-                printf("RAA"); //ROJO AZUL AZUL
+                printf(" RAA "); //ROJO AZUL AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("rojo");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul azul");
+                lcd.print("azul azul"); // imprime a continuacion abreviatura de segundos
                 break;
           }
           break;   
@@ -327,29 +364,29 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print("VRR"); //VERDE ROJO ROJO
+                Serial.print(" VRR"); //VERDE ROJO ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo rojo");
+                lcd.print("rojo rojo"); // imprime a continuacion abreviatura de segundos
                 
                 break;
             case 2: 
-                Serial.print("VRV"); //VERDE ROJO VERDE
+                Serial.print(" VRV "); //VERDE ROJO VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo verde");
+                lcd.print("rojo verde"); // imprime a continuacion abreviatura de segundos
                 break;
             case 3: 
-                Serial.print("VRA"); //VERDE ROJO AZUL
+                Serial.print(" VRA "); //VERDE ROJO AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo azul");
+                lcd.print("rojo azul"); // imprime a continuacion abreviatura de segundos
                 break;
           }
           break;
@@ -359,28 +396,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print("VVR"); //VERDE VERDE ROJO
+                Serial.print(" VVR "); //VERDE VERDE ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde rojo");
+                lcd.print("verde rojo"); // imprime a continuacion abreviatura de segundos
                 break;
             case 2: 
-                Serial.print("VVV"); //VERDE VERDE VERDE
+                Serial.print(" VVV "); //VERDE VERDE VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde verde");
+                lcd.print("verde verde"); // imprime a continuacion abreviatura de segundos
                 break;
             case 3: 
-                Serial.print("VVA"); //VERDE VERDE AZUL
+                Serial.print(" VVA "); //VERDE VERDE AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde azul");
+                lcd.print("verde azul"); // imprime a continuacion abreviatura de segundos
                 break;
           }
           break;
@@ -390,28 +427,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print("VAR"); //VERDE AZUL ROJO
+                Serial.print(" VAR "); //VERDE AZUL ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul rojo");
+                lcd.print("azul rojo"); // imprime a continuacion abreviatura de segundos
                 break;
             case 2: 
-                Serial.print("VAV"); //VERDE AZUL VERDE
+                Serial.print(" VAV "); //VERDE AZUL VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul verde");
+                lcd.print("azul verde"); // imprime a continuacion abreviatura de segundos
                 break;
             case 3: 
-                Serial.print("VAA"); //VERDE AZUL AZUL
+                Serial.print(" VAA "); //VERDE AZUL AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("verde");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul azul");
+                lcd.print("azul azul"); // imprime a continuacion abreviatura de segundos
                 break;
           } 
           break;  
@@ -428,28 +465,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print("ARR"); //AZUL ROJO ROJO
+                Serial.print(" ARR "); //AZUL ROJO ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo rojo");
+                lcd.print("rojo rojo"); // imprime a continuacion abreviatura de segundos
                 break;
             case 2: 
-                Serial.print("ARV"); //AZUL ROJO VERDE
+                Serial.print(" ARV "); //AZUL ROJO VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo verde");
+                lcd.print("rojo verde"); // imprime a continuacion abreviatura de segundos
                 break;
             case 3: 
-                Serial.print("ARA"); //AZUL ROJO AZUL
+                Serial.print(" ARA"); //AZUL ROJO AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("rojo azul");
+                lcd.print("rojo azul"); // imprime a continuacion abreviatura de segundos
                 break;
           }
           break;
@@ -459,28 +496,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print("AVR"); //AZUL VERDE ROJO
+                Serial.print(" AVR "); //AZUL VERDE ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde rojo");
+                lcd.print("verde rojo"); // imprime a continuacion abreviatura de segundos
                 break;
             case 2: 
-                Serial.print("AVV"); //AZUL VERDE VERDE
+                Serial.print(" AVV "); //AZUL VERDE VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde verde");
+                lcd.print("verde verde"); // imprime a continuacion abreviatura de segundos
                 break;
             case 3: 
-                Serial.print("AVA"); //AZUL VERDE AZUL
+                Serial.print(" AVA "); //AZUL VERDE AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("verde azul");
+                lcd.print("verde azul"); // imprime a continuacion abreviatura de segundos
                 break;
           }
           break;
@@ -490,28 +527,28 @@ int mensaje(int combinacion[])
           switch (combinacion[2])
           {
             case 1: 
-                Serial.print("AAR"); //AZUL AZUL ROJO
+                Serial.print(" AAR "); //AZUL AZUL ROJO
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul rojo");
+                lcd.print("azul rojo"); // imprime a continuacion abreviatura de segundos
                 break;
             case 2: 
-                Serial.print("AAV"); //AZUL AZUL VERDE
+                Serial.print(" AAV "); //AZUL AZUL VERDE
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul verde");
+                lcd.print("azul verde"); // imprime a continuacion abreviatura de segundos
                 break;
             case 3: 
-                Serial.print("AAA"); //AZUL AZUL AZUL
+                Serial.print(" AAA "); //AZUL AZUL AZUL
                 lcd.clear();
                 lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
                 lcd.print("azul");  // escribe el texto en pantalla
                 lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 1
-                lcd.print("azul azul");
+                lcd.print("azul azul"); // imprime a continuacion abreviatura de segundos
                 break;
           }
           break;   
