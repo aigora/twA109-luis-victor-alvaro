@@ -21,8 +21,8 @@ LiquidCrystal lcd(7, 6, 5, 4, 3, 2);  // pines RS, E, D3, D2, D1, D0 de modulo 1
 int clr=0;
 int frequency=0;
 const byte FILAS = 4; 
-const byte COLS = 4; //four columns 
-int delay1=3000; // Delay Value are used
+const byte COLS = 4;
+int delay1=3000;
 // pin 11 EN pin , D4=9 , D5=8 , D6=7 , D7=6
 int c=0; // flag1 used to check The Password
 int error=0; //flag3 Check if Invalid Password it Reached Specific Value
@@ -30,16 +30,16 @@ char keys[FILAS][COLS] =
  {{'1','2','3','A'},
   {'4','5','6','B'},
   {'7','8','9','C'},
-  {'*','0','#','D'}}; // Keypad Form
+  {'*','0','#','D'}};
   
-char pass[]={'0','0','0','0','0','0'}; // The Password 
-char newpass[6];  // New Array That's Carried The typed Password
+char pass[]={'0','0','0','0','0','0'};
+char newpass[6]; 
 byte filPins[FILAS] = {
-  31, 33, 35, 37}; //connect to the row pinouts of the keypad
+  31, 33, 35, 37};
 byte colPins[COLS] = {
-  39, 41, 43, 45}; //connect to the column pinouts of the keypad
+  39, 41, 43, 45}; 
 int count=0;
-int f=0; // to Enter Clear Display one time
+int f=0; 
 Keypad keypad = Keypad( makeKeymap(keys), filPins, colPins, FILAS, COLS );
 
 
@@ -98,14 +98,14 @@ void loop()
   {
     if(f==0)
     {
-      lcd.clear(); // Clear Everything On the LCD
+      lcd.clear();
       f=1;
     }
    lcd.clear();
    lcd.setCursor(0,0);
    lcd.print("Clave:");
    lcd.setCursor(i,1);
-   lcd.print("*");  // Display '*' For Every Charachter 
+   lcd.print("*");  // Escribe '*' para cada caracter 
    newpass[i]=key;
    if(newpass[i]==pass[i])c++;
    i++;
@@ -158,12 +158,12 @@ void loop()
     delay(5000);
     
    }
-    char newpass[]={'0','0','0','0','0','0'}; // Clear The Value of password entered by user.
+    char newpass[]={'0','0','0','0','0','0'}; // Limpia el valor de la contraseña introducida por el usuario
     print1();
     c=0;
     i=0;
     f=0;
-  }else if(c<6&&i==6)//Invalid Password Function
+  }else if(c<6&&i==6)//Funcion Password incorrecta
   {
     digitalWrite(LED, HIGH);
     delay(500);
@@ -186,15 +186,15 @@ void loop()
       delay(10);  
       switch (clr) {
         case 1:
-        Serial.print("ROJO");
+        //Serial.print("ROJO");
         vector[i]=1; 
         break;
         case 3:
-        Serial.print("verde");
+        //Serial.print("verde");
         vector[i]=2; 
         break;
         default:
-        Serial.print("AZUL");
+       // Serial.print("AZUL");
         vector[i]=3;  
       }
   } 
@@ -202,38 +202,21 @@ void loop()
 
 
     int readColor() {
-      // Setting red filtered photodiodes to be read
+      
       digitalWrite(s2, LOW);
       digitalWrite(s3, LOW);
-      // Reading the output frequency
       frequency = pulseIn(out, LOW);
       int R = frequency;
-      // Printing the value on the serial monitor
-      Serial.print("R= ");//printing name
-      Serial.print(frequency);//printing RED color frequency
-      Serial.print("  ");
       delay(50);
-      // Setting Green filtered photodiodes to be read
       digitalWrite(s2, HIGH);
       digitalWrite(s3, HIGH);
-      // Reading the output frequency
       frequency = pulseIn(out, LOW);
       int G = frequency;
-      // Printing the value on the serial monitor
-      Serial.print("G= ");//printing name
-      Serial.print(frequency);//printing RED color frequency
-      Serial.print("  ");
       delay(50);
-      // Setting Blue filtered photodiodes to be read
       digitalWrite(s2, LOW);
       digitalWrite(s3, HIGH);
-      // Reading the output frequency
       frequency = pulseIn(out, LOW);
       int B = frequency;
-      // Printing the value on the serial monitor
-      Serial.print("B= ");//printing name
-      Serial.print(frequency);//printing RED color frequency
-      Serial.println("  ");
       delay(50);
       if(R==21 || R== 23){
         clr=1;
