@@ -132,3 +132,5 @@ int sensorcolor(int vector[],int i){
     }
     
 ```
+
+### Sensor de 
