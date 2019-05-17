@@ -160,4 +160,4 @@ fuente de tensión externa (una batería o una fuente de alimentación) a una te
 
 En nuestro caso solo hemos empleado el servomotor con bucles for para moverlo entre posiciones. La primera sitúa la plataforma debajo del tubo de caramelos y recoge uno. La segunda posición coloca el caramelo bajo el sensor de color. La tercera deja caer el caramelo hacia la bandeja de recogida. Para terminar regresa a la posicion inicial.
 
-### 
+
