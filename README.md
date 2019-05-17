@@ -1,6 +1,6 @@
 ## Título del trabajo
 
-# Máquina expendedora tarot
+### Máquina expendedora tarot
 
 Maquina expendedora de caramelos de colores. Primero la máquina pedirá una contraseña y, si esta es correcta, entregará 3 caramelos. Esta detectará el color de estos caramelos y asignará un mensaje a cada combinación de colores. Finalmente enviará los datos de caramelos gastados a C y creará un fichero con ellos.
 
