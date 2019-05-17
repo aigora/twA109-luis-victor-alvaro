@@ -133,4 +133,31 @@ int sensorcolor(int vector[],int i){
     
 ```
 
-### Sensor de 
+### Servomotor
+
+Un servomotor es un accionador ampliamente empleado en electrónica. A diferencia de otros
+tipos de motores en los que se controla la velocidad de giro, en un servo se indica el ángulo
+deseado y el servo se encarga de posicionarse en este ángulo.
+Típicamente los servos disponen de un rango de movimiento de entre 0 a 180°. Es decir, no
+son capaces de dar la vuelta por completo (de hecho disponen de topes internos que limitan el
+rango de movimiento). Internamente un servo está constituido por un motor de corriente
+continua, acoplado a un reductor para reducir la velocidad de giro, junto con la electrónica
+necesaria para controlar su posición. Frecuentemente se dispone de un potenciómetro unido
+al eje del servo que permite al servo conocer la posición del eje. Esta información es tratada
+por un controlador integrado que se encarga de actuar sobre el motor para alcanzar la
+posición deseada.
+La comunicación de la posición deseada se realiza mediante la transmisión de una señal
+pulsada con periodo de 20ms. El ancho del pulso determina la posición del servo. La relación
+entre el ancho del pulso y el ángulo depende del modelo del motor. Por ejemplo, algunos
+modelos responden con 0° a un pulso de 500 ms, y otros a un pulso de 1000 ms. En general,
+en todos los modelos un pulso entre 500-1000µs corresponde con 0°, un pulso de 1500µs
+corresponde con 90° (punto neutro) y un pulso entre 2000-2500µs corresponde con 180°. Por
+tanto, variando la señal en microsegundos podemos disponer de una precisión teórica de
+0.18°-0.36°, siempre que la mecánica del servo acompañe.
+Conectar un servo a Arduino es sencillo. El servo dispone de tres cables, dos de alimentación
+(GND y Vcc) y uno de señal (Sig). En general, la alimentación a los servos se realiza desde una
+fuente de tensión externa (una batería o una fuente de alimentación) a una tensión de 5V6.5V, siendo 6V la tensión idónea. Arduino puede llegar a proporcionar corriente suficiente.
+
+En nuestro caso solo hemos empleado el servomotor con bucles for para moverlo entre posiciones. La primera sitúa la plataforma debajo del tubo de caramelos y recoge uno. La segunda posición coloca el caramelo bajo el sensor de color. La tercera deja caer el caramelo hacia la bandeja de recogida. Para terminar regresa a la posicion inicial.
+
+### 
