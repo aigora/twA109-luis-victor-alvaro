@@ -48,3 +48,10 @@ Los pines S0 y S1 controlan la frecuencia de la salida y la desactivación del m
 --- | ----------- | --- | ----- | ------ |
  S0 |     L       |  L  |   H   |    H   |
  S1 |     L       |  H  |   L   |    H   |
+ 
+ Por otra parte, los pines S2 y S3 seleccionan el color a medir. Deberemos conectarlos a dos salidas digitales de Arduino.
+
+....| Rojo  | Azul  |  Clear  |  Verde  |
+--- | ----- | ----- | ------- | ------- |
+ S2 |   L   |   L   |    H    |    H    |
+ S3 |   L   |   H   |    L    |    H    |
