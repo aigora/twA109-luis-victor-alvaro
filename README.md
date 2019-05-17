@@ -55,3 +55,95 @@ Los pines S0 y S1 controlan la frecuencia de la salida y la desactivación del m
 --- | ----- | ----- | ------- | ------- |
  S2 |   L   |   L   |    H    |    H    |
  S3 |   L   |   H   |    L    |    H    |
+
+**Ejemplo de codigo**
+```
+git status 
+const int s0 = 8;  
+const int s1 = 9;  
+const int s2 = 12;  
+const int s3 = 11;  
+const int out = 10;    
+int rojo =0;  
+int verde =0;  
+int azul = 0;
+int vector[3];
+void setup() {
+      Serial.begin(9600);
+      pinMode(s0, OUTPUT);
+      pinMode(s1, OUTPUT);
+      pinMode(s2, OUTPUT);
+      pinMode(s3, OUTPUT);
+      pinMode(out, INPUT);
+      digitalWrite(s0, HIGH);
+      digitalWrite(s1, LOW);
+void loop{
+for(i=0;i<3;i++)
+  sensorcolor(vector,i);
+}
+int sensorcolor(int vector[],int i){  
+  clr = readColor();
+      delay(10);  
+      switch (clr) {
+        case 1:
+        Serial.print("ROJO");
+        vector[i]=1; 
+        break;
+        case 3:
+        Serial.print("verde");
+        vector[i]=2; 
+        break;
+        default:
+        Serial.print("AZUL");
+        vector[i]=3;  
+      }
+  } 
+
+
+
+    int readColor() {
+      // Setting red filtered photodiodes to be read
+      digitalWrite(s2, LOW);
+      digitalWrite(s3, LOW);
+      // Reading the output frequency
+      frequency = pulseIn(out, LOW);
+      int R = frequency;
+      // Printing the value on the serial monitor
+      Serial.print("R= ");//printing name
+      Serial.print(frequency);//printing RED color frequency
+      Serial.print("  ");
+      delay(50);
+      // Setting Green filtered photodiodes to be read
+      digitalWrite(s2, HIGH);
+      digitalWrite(s3, HIGH);
+      // Reading the output frequency
+      frequency = pulseIn(out, LOW);
+      int G = frequency;
+      // Printing the value on the serial monitor
+      Serial.print("G= ");//printing name
+      Serial.print(frequency);//printing RED color frequency
+      Serial.print("  ");
+      delay(50);
+      // Setting Blue filtered photodiodes to be read
+      digitalWrite(s2, LOW);
+      digitalWrite(s3, HIGH);
+      // Reading the output frequency
+      frequency = pulseIn(out, LOW);
+      int B = frequency;
+      // Printing the value on the serial monitor
+      Serial.print("B= ");//printing name
+      Serial.print(frequency);//printing RED color frequency
+      Serial.println("  ");
+      delay(50);
+      if(R==21 || R== 23){
+        clr=1;
+      }
+
+      
+      if(R==22){
+        clr = 3; // Green
+
+      }
+      return clr;  
+    }
+    ´´´
