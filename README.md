@@ -38,4 +38,12 @@ Otra razón por la cual elegimos este trabajo fue con la intención de producir 
 
 ## Hardware
 
+### Sensor de color TCS3200
 
+El TCS3200 tiene cuatro entradas digitales S0, S1, S2, y S3, y una salida digital Out. Para conectarlo a Arduino hemos necesitado emplear 5 pines digitales.
+En primer lugar alimentamos el módulo conectando los pines Gnd y Vcc del TCS3200, respectivamente, a Gnd y Vcc de Arduino.
+Los pines S0 y S1 controlan la frecuencia de la salida y la desactivación del módulo. Los conectamos a dos salidas digitales, o podemos conectarlas a 5V si no queremos poder apagar el módulo.
+    | Power Down  | 2%  |  20%  |  100%  |
+--- | ----------- | --- | ----- | ------ |
+ S0 |     L       |  L  |   H   |    H   |
+ S1 |     L       |  H  |   L   |    H   |
