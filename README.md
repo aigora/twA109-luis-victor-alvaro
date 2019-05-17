@@ -130,4 +130,5 @@ int sensorcolor(int vector[],int i){
       }
       return color;  
     }
-    ```
+    
+```
