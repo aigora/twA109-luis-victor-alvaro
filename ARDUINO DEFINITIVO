@@ -201,33 +201,38 @@ void loop()
 
 
 
-    int readColor() {
-      
+ int readColor() {
+      // Diodo rojo
       digitalWrite(s2, LOW);
       digitalWrite(s3, LOW);
       frequency = pulseIn(out, LOW);
       int R = frequency;
       delay(50);
+      // Diodo verde
       digitalWrite(s2, HIGH);
       digitalWrite(s3, HIGH);
       frequency = pulseIn(out, LOW);
       int G = frequency;
       delay(50);
+      //Diodo azul
       digitalWrite(s2, LOW);
       digitalWrite(s3, HIGH);
       frequency = pulseIn(out, LOW);
       int B = frequency;
       delay(50);
-      if(R==21 || R== 23){
-        clr=1;
+  if(R<45 & R>32 & G<65 & G>55){
+    color = 1; // Red
+  }
+  if(R<53 & R>40 & G<53 & G>40){
+    color = 2; // Green
+  }
+  if (G<58 & G>45 & B<40 &B>26){
+    color = 3; // Blue
       }
+      return color;  
+    }
+    
 
-      
-      if(R==22){
-        clr = 3; // Green
-
-      }
-      return clr;  
     }
 
 
