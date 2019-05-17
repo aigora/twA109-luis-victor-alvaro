@@ -1,8 +1,8 @@
 ## Título del trabajo
 
-Máquina expendedora tarot
+# Máquina expendedora tarot
 
-Maquina expendedora de caramelos de colores, esta maquina detectara el color de estos caramelos y signa una accion a cada combinacion de colores.
+Maquina expendedora de caramelos de colores. Primero la máquina pedirá una contraseña y, si esta es correcta, entregará 3 caramelos. Esta detectará el color de estos caramelos y asignara un mensaje a cada combinacion de colores.
 
 ## Integrantes del equipo
 
@@ -16,13 +16,16 @@ Maquina expendedora de caramelos de colores, esta maquina detectara el color de 
 
 - Aprender a programar hardware y software.
 
-## Sensores necesarios
+## Sensores y materiales necesarios
 
-- 1 placa Arduino
-- Estructura de madera o carton
-- 3 servomotores
-- Detector o identificador de colores
-- Detector de peso
-- Pantalla de texto
-- Recipiente para los caramelos
-- Cable conector
+- 1 placa Arduino Mega 2560.
+- Protoboard.
+- Estructura de carton pluma.
+- 1 servomotor.
+- Piezas hechas con impresora 3D para incorporar al servomotor.
+- Sensor de colores TCS3200.
+- Panel de teclas Keypad 4x4.
+- Pantalla de texto LCD16x02.
+- Led rojo y led verde.
+- Resistencias.
+- Cable conector.
