@@ -226,14 +226,14 @@ void loop()
   if(R<53 & R>40 & G<53 & G>40){
     clr = 2; // Green
   }
-  if (G<58 & G>45 & B<40 &B>26){
+  else{
     clr = 3; // Blue
       }
       return clr;  
     }
     
 
-    }
+    
 
 
 
