@@ -162,6 +162,7 @@ Conectar un servo a Arduino es sencillo. El servo dispone de tres cables, dos de
 (GND y Vcc) y uno de señal (Sig). En general, la alimentación a los servos se realiza desde una
 fuente de tensión externa (una batería o una fuente de alimentación) a una tensión de 5V6.5V, siendo 6V la tensión idónea. Arduino puede llegar a proporcionar corriente suficiente.
 
+**Ejemplo de codigo**
 ```
 //Avanza de 115 a 65, posición donde está el sensor de color. Ahí, se detiene con un delay de 500.
       for(int i = 140; i > 65; i--) {
@@ -183,4 +184,112 @@ fuente de tensión externa (una batería o una fuente de alimentación) a una te
 ```
 En nuestro caso solo hemos empleado el servomotor con bucles for para moverlo entre posiciones. La primera sitúa la plataforma debajo del tubo de caramelos y recoge uno. La segunda posición coloca el caramelo bajo el sensor de color. La tercera deja caer el caramelo hacia la bandeja de recogida. Para terminar regresa a la posicion inicial.
 
+### Keypad 4x4
 
+Este componente, situado en la parte frontal de la máquina, se trata de un teclado 4x4 cuya función es introducir una serie de dígitos que conforman la contraseña de inicio de la máquina. Si la contraseña es la correcta, comienza el funcionamiento de la máquina, y si esta es incorrecta, tendrá que volver a intentar introducir una contraseña válida. Este componente va conectado simultáneamente con una pantalla LCD (explicada más adelante) que va mostrando el numero de dígitos que vamos introduciendo por el keypad en forma de asteriscos. También aparecen por la pantalla LCD las instrucciones de "Introduzca contraseña" y "Contraseña incorrecta".
+
+**Ejemplo de codigo**
+```
+#include <Key.h>
+#include <Keypad.h>
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);  // pines RS, E, D3, D2, D1, D0 de modulo 1602A
+int c=0; // flag1 usada para comprobar la contraseña digito a digito
+int error=0; //flag3 comprueba si la contraseña es inválida
+char keys[FILAS][COLS] =
+ {{'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'}};
+  
+char pass[]={'0','0','0','0','0','0'};
+char newpass[6]; 
+byte filPins[FILAS] = {
+  31, 33, 35, 37};
+byte colPins[COLS] = {
+  39, 41, 43, 45}; 
+int count=0;
+int f=0; 
+Keypad keypad = Keypad( makeKeymap(keys), filPins, colPins, FILAS, COLS );
+
+void setup() {
+Serial.begin(9600);
+lcd.begin(16, 2);     // inicializa a display de 16 columnas y 2 lineas
+lcd.begin(16, 2);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("  Introduzca la");
+    lcd.setCursor(0,1);
+    lcd.print("     clave");
+  delay(delay1);
+}
+void print1()
+ {
+    pinMode(LED, LOW);
+    pinMode(LED1,LOW);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print(" Introduzca la");
+    lcd.setCursor(0,1);
+    lcd.print("     clave");
+    
+ }
+
+void loop()
+{
+
+  char key = keypad.getKey();
+  if(key != NO_KEY&&i<6)
+  {
+    if(f==0)
+    {
+      lcd.clear();
+      f=1;
+    }
+   lcd.clear();
+   lcd.setCursor(0,0);
+   lcd.print("Clave:");
+   lcd.setCursor(i,1);
+   lcd.print("*");  // Escribe '*' para cada caracter 
+   newpass[i]=key;
+   if(newpass[i]==pass[i])c++;
+   i++;
+  }
+  }
+  if(c==6)
+  {
+    
+    //Empieza en 115
+    servoMotor.write(140);
+    delay(500);
+    
+   digitalWrite(LED1, HIGH);
+
+   lcd.clear();
+   lcd.setCursor(0, 0);      // ubica cursor en columna 0, linea 0
+   lcd.print("Procesando");  // escribe el texto en pantalla
+   lcd.setCursor(0, 1);      // ubica cursor en columna 0, linea 0
+   lcd.print("futuro...");  // escribe el texto en pantalla
+   char newpass[]={'0','0','0','0','0','0'}; // Limpia el valor de la contraseña introducida por el usuario
+    print1();
+    c=0;
+    i=0;
+    f=0;
+  }else if(c<6&&i==6)
+  {
+    digitalWrite(LED, HIGH);
+    delay(500);
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("Clave incorrecta");
+    delay(1000);
+    i=0;
+    c=0;
+    error++;
+    print1();
+  }
+
+```
+En el código primero se declara el numero de filas y de columnas para luego crear una matriz con las teclas de el panel. También se declaran al inicio las variables que nos ayudarán a comprobar si la contrasea es correcta. Declaramos la contraseña correcta y "newpass" que limpiará la combinación introducida cuando el void loop llegue a su fin. Tambien inicializamos keypad con todos los datos anteriores utilizando la librería "keypad.h". Al inicio del loop se comprueba que no hay ningún error con la contraseña declarada y pide introducir una contraseña mientras no haya ningún dígito guardado. Cuando detecta que ya hay una combinación de seis caracteres los comprueba uno a uno, añadiendo uno a "c" cada vez que uno es correcto. Cuando hay seis correctos empieza el resto del programa. Al final limpia todas las variables para que se inicialicen como al principio.
+
+### LCD Screen
