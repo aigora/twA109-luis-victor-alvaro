@@ -190,7 +190,7 @@ En nuestro caso solo hemos empleado el servomotor con bucles for para moverlo en
 
 **Esquema**
 
-![Esquema servo](/FOTOS/servo.jpg)
+![Esquema servo](/FOTOS/servo.jpeg)
 
 ### Keypad 4x4
 
@@ -302,7 +302,7 @@ En el código primero se declara el numero de filas y de columnas para luego cre
 
 **Esquema**
 
-![Esquema keypad](/FOTOS/keypad.jpg)
+![Esquema keypad](/FOTOS/keypad.jpeg)
 
 ### LCD Screen
 
@@ -332,3 +332,18 @@ Como se puede ver el código para este componente es muy sencillo. Utilizando la
 **Esquema**
 
 ![Esquema LCD](/FOTOS/LCD.jpg)
+
+### Leds
+
+Este es quizás el componente menos necesario, ya que no tiene ninguna función importante, solo hace la máquina más vistosa. 
+Estos leds solo se encienden tras introducir la contraseña: si esta es correcta se enciende el led verde, y si es incorrecta, el rojo.
+
+**Ejemplo de código**
+
+```
+
+```
+
+**Esquema**
+
+![Esquema leds](/FOTOS/leds.jpeg)
