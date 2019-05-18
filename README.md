@@ -17,6 +17,9 @@ Maquina expendedora de caramelos de colores. Primero la máquina pedirá una con
 - Desarrollar un proyecto empleando conocimientos adquiridos aplicable a una situacion real.
 - Aprender a programar hardware y software empleando Arduino y C.
 
+## Videos e imágenes de presentación
+Hemos creado una carpeta de Google Drive donde se pueden ver videos e imágenes para presentar nuestro proyecto
+https://drive.google.com/folderview?id=1tE_ZWP6_5zV4zBAZXPAHIUFye-SxdYIJ
 ## Sensores y materiales necesarios
 
 - 1 placa Arduino Mega 2560.
