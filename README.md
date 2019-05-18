@@ -188,6 +188,10 @@ fuente de tensión externa (una batería o una fuente de alimentación) a una te
 ```
 En nuestro caso solo hemos empleado el servomotor con bucles for para moverlo entre posiciones. La primera sitúa la plataforma debajo del tubo de caramelos y recoge uno. La segunda posición coloca el caramelo bajo el sensor de color. La tercera deja caer el caramelo hacia la bandeja de recogida. Para terminar regresa a la posicion inicial.
 
+**Esquema**
+
+![Esquema servo](/FOTOS/servo.jpg)
+
 ### Keypad 4x4
 
 Este componente, situado en la parte frontal de la máquina, se trata de un teclado 4x4 cuya función es recibir una serie de dígitos que conforman la contraseña de inicio de la máquina. Si la contraseña es la correcta, comienza el funcionamiento de la máquina, y si esta es incorrecta, tendrá que volver a intentar introducir una contraseña válida. Este componente va conectado simultáneamente con una pantalla LCD (explicada más adelante) que va mostrando el numero de dígitos que vamos introduciendo por el keypad en forma de asteriscos. También aparecen por la pantalla LCD las instrucciones de "Introduzca contraseña" y "Contraseña incorrecta". 
@@ -296,6 +300,10 @@ void loop()
 ```
 En el código primero se declara el numero de filas y de columnas para luego crear una matriz con las teclas de el panel. También se declaran al inicio las variables que nos ayudarán a comprobar si la contrasea es correcta. Declaramos la contraseña correcta y "newpass" que limpiará la combinación introducida cuando el void loop llegue a su fin. Tambien inicializamos keypad con todos los datos anteriores utilizando la librería "keypad.h". Al inicio del loop se comprueba que no hay ningún error con la contraseña declarada y pide introducir una contraseña mientras no haya ningún dígito guardado. Cuando detecta que ya hay una combinación de seis caracteres los comprueba uno a uno, añadiendo uno a "c" cada vez que uno es correcto. Cuando hay seis correctos empieza el resto del programa. Al final limpia todas las variables para que se inicialicen como al principio.
 
+**Esquema**
+
+![Esquema keypad](/FOTOS/keypad.jpg)
+
 ### LCD Screen
 
 Este componente situado en la parte frontal de la máquina es una pantalla de 16 lineas por 2 columnas. Su función es imprimir diferentes instrucciones para el usuario.
@@ -320,3 +328,7 @@ void loop{
 ```
 
 Como se puede ver el código para este componente es muy sencillo. Utilizando la librería "LiquidCrystal" basta con especificar el número de filas y columnas para inicializar la pantalla. Luego, para escribir en diferentes posiciones basta con cambiar el cursor a las coordenadas deseadas.
+
+**Esquema**
+
+![Esquema LCD](/FOTOS/LCD.jpg)
