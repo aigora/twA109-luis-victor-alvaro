@@ -197,7 +197,7 @@ En nuestro caso solo hemos empleado el servomotor con bucles for para moverlo en
 
 ### Keypad 4x4
 
-Este componente, situado en la parte frontal de la máquina, se trata de un teclado 4x4 cuya función es recibir una serie de dígitos que conforman la contraseña de inicio de la máquina. Si la contraseña es la correcta, comienza el funcionamiento de la máquina, y si esta es incorrecta, tendrá que volver a intentar introducir una contraseña válida. Este componente va conectado simultáneamente con una pantalla LCD (explicada más adelante) que va mostrando el numero de dígitos que vamos introduciendo por el keypad en forma de asteriscos. También aparecen por la pantalla LCD las instrucciones de "Introduzca contraseña" y "Contraseña incorrecta". 
+Este componente, situado en la parte frontal de la máquina, se trata de un teclado 4x4 cuya función es recibir una serie de dígitos que conforman la contraseña de inicio de la máquina. Si la contraseña es la correcta, comienza el funcionamiento de la máquina, y si esta es incorrecta, tendrá que volver a intentar introducir una contraseña válida. Este componente va conectado simultáneamente con una pantalla LCD (explicada más adelante) que va mostrando el número de dígitos que vamos introduciendo por el keypad en forma de asteriscos. También aparecen por la pantalla LCD las instrucciones de "Introduzca contraseña" y "Contraseña incorrecta". 
 
 **Ejemplo de codigo**
 ```
@@ -301,7 +301,7 @@ void loop()
   }
 
 ```
-En el código primero se declara el numero de filas y de columnas para luego crear una matriz con las teclas de el panel. También se declaran al inicio las variables que nos ayudarán a comprobar si la contrasea es correcta. Declaramos la contraseña correcta y "newpass" que limpiará la combinación introducida cuando el void loop llegue a su fin. Tambien inicializamos keypad con todos los datos anteriores utilizando la librería "keypad.h". Al inicio del loop se comprueba que no hay ningún error con la contraseña declarada y pide introducir una contraseña mientras no haya ningún dígito guardado. Cuando detecta que ya hay una combinación de seis caracteres los comprueba uno a uno, añadiendo uno a "c" cada vez que uno es correcto. Cuando hay seis correctos empieza el resto del programa. Al final limpia todas las variables para que se inicialicen como al principio.
+En el código primero se declara el número de filas y de columnas para luego crear una matriz con las teclas de el panel. También se declaran al inicio las variables que nos ayudarán a comprobar si la contrasea es correcta. Declaramos la contraseña correcta y "newpass" que limpiará la combinación introducida cuando el void loop llegue a su fin. Tambien inicializamos keypad con todos los datos anteriores utilizando la librería "keypad.h". Al inicio del loop se comprueba que no hay ningún error con la contraseña declarada y pide introducir una contraseña mientras no haya ningún dígito guardado. Cuando detecta que ya hay una combinación de seis caracteres los comprueba uno a uno, añadiendo uno a "c" cada vez que uno es correcto. Cuando hay seis correctos empieza el resto del programa. Al final limpia todas las variables para que se inicialicen como al principio.
 
 **Esquema**
 
