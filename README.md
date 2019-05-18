@@ -125,13 +125,17 @@ int sensorcolor(int vector[],int i){
   if(R<53 & R>40 & G<53 & G>40){
     color = 2; // Green
   }
-  if (G<58 & G>45 & B<40 &B>26){
+  else
+  {
     color = 3; // Blue
-      }
+  }
       return color;  
-    }
+ }
     
 ```
+
+El funcionamiento del código sigue el paradigma modular, empleando varias funciones para simplificar el código. La primera función, "sensorcolor" asigna la acción a cada color detectado, sin embargo esta no detecta el color, si no que llama a otra función diferente para esto. Esta función tiene entradas "i" (la variable del bucle for principal) y un vector de tres enteros donde se guardará la combinación de colores.
+La función que detecta el color es "readColor". El funcionamiento de esta función no tiene gran complicación, aunque el código resulta cofuso. Básicamente enciende los diodos de cada color de forma separada para anotar la frecuencia leída por cada uno. Más tarde compara estas frecuencias a unas de referencia (ajustadas por nosotros para que distingan los colores de nuestros caramelos) y devuelve un entero a la función "sensorcolor" (1=ROJO 2=VERDE 3=AZUL)
 
 ### Servomotor
 
@@ -158,6 +162,25 @@ Conectar un servo a Arduino es sencillo. El servo dispone de tres cables, dos de
 (GND y Vcc) y uno de señal (Sig). En general, la alimentación a los servos se realiza desde una
 fuente de tensión externa (una batería o una fuente de alimentación) a una tensión de 5V6.5V, siendo 6V la tensión idónea. Arduino puede llegar a proporcionar corriente suficiente.
 
+```
+//Avanza de 115 a 65, posición donde está el sensor de color. Ahí, se detiene con un delay de 500.
+      for(int i = 140; i > 65; i--) {
+        servoMotor.write(i);
+        delay(2);
+      }
+      //Avanza de 65 a 29, posición donde está el agujero para que caiga el caramelo.
+      for(int i = 65; i > 29; i--) {
+        servoMotor.write(i);
+        delay(2);
+      }
+      delay(500);
+      
+      //Vuelve a la posicion de 115, donde recoje otro caramelo.
+      for(int i = 29; i < 14 0; i++) {
+        servoMotor.write(i);
+        delay(2);
+      }
+```
 En nuestro caso solo hemos empleado el servomotor con bucles for para moverlo entre posiciones. La primera sitúa la plataforma debajo del tubo de caramelos y recoge uno. La segunda posición coloca el caramelo bajo el sensor de color. La tercera deja caer el caramelo hacia la bandeja de recogida. Para terminar regresa a la posicion inicial.
 
 
