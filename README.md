@@ -135,7 +135,10 @@ int sensorcolor(int vector[],int i){
 ```
 
 El funcionamiento del código sigue el paradigma modular, empleando varias funciones para simplificar el código. La primera función, "sensorcolor" asigna la acción a cada color detectado, sin embargo esta no detecta el color, si no que llama a otra función diferente para esto. Esta función tiene entradas "i" (la variable del bucle for principal) y un vector de tres enteros donde se guardará la combinación de colores.
-La función que detecta el color es "readColor". El funcionamiento de esta función no tiene gran complicación, aunque el código resulta cofuso. Básicamente enciende los diodos de cada color de forma separada para anotar la frecuencia leída por cada uno. Más tarde compara estas frecuencias a unas de referencia (ajustadas por nosotros para que distingan los colores de nuestros caramelos) y devuelve un entero a la función "sensorcolor" (1=ROJO 2=VERDE 3=AZUL)
+La función que detecta el color es "readColor". El funcionamiento de esta función no tiene gran complicación, aunque el código resulta confuso. Básicamente enciende los diodos de cada color de forma separada para anotar la frecuencia leída por cada uno. Más tarde compara estas frecuencias a unas de referencia (ajustadas por nosotros para que distingan los colores de nuestros caramelos) y devuelve un entero a la función "sensorcolor" (1=ROJO 2=VERDE 3=AZUL)
+
+![Esquema sensorcolor](/FOTOS/sensorcolor.jpg)
+Format: ![Esquema sensor de color](url)
 
 ### Servomotor
 
