@@ -349,10 +349,16 @@ pinMode(LED, OUTPUT);
 pinMode(LED1, OUTPUT);
 }
 void loop{
-digitalWrite(LED1, HIGH); //Led verde
-digitalWrite(LED, HIGH); //Led rojo
+digitalWrite(LED1, HIGH); //Led verde se enciende
+delay(500);
+digitalWrite(LED, HIGH); //Led rojo se enciende
+delat(500);
+digitalWrite(LED1, LOW); //Led verde se apaga
+delay(500);
+digitalWrite(LED, LOW); //Led rojo se apaga
 }
 ```
+Simplemente se declaran los pines donde van conectados, como pines de salida y empleando "HIGH" y "LOW" se encienden y se apagan.
 
 **Esquema**
 
