@@ -331,7 +331,7 @@ Como se puede ver el código para este componente es muy sencillo. Utilizando la
 
 **Esquema**
 
-![Esquema LCD](/FOTOS/LCD.jpg)
+![Esquema LCD](/FOTOS/LCD.jpeg)
 
 ### Leds
 
@@ -341,7 +341,17 @@ Estos leds solo se encienden tras introducir la contraseña: si esta es correcta
 **Ejemplo de código**
 
 ```
-
+int LED = 29;
+int LED1 = 27;
+void setup() {
+Serial.begin(9600);
+pinMode(LED, OUTPUT);
+pinMode(LED1, OUTPUT);
+}
+void loop{
+digitalWrite(LED1, HIGH); //Led verde
+digitalWrite(LED, HIGH); //Led rojo
+}
 ```
 
 **Esquema**
