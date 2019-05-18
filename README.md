@@ -56,7 +56,7 @@ Los pines S0 y S1 controlan la frecuencia de la salida y la desactivación del m
  S2 |   L   |   L   |    H    |    H    |
  S3 |   L   |   H   |    L    |    H    |
 
-**Ejemplo de codigo**
+**Ejemplo de código**
 ```
 const int s0 = 8;  
 const int s1 = 9;  
@@ -120,14 +120,14 @@ int sensorcolor(int vector[],int i){
       int B = frequency;
       delay(50);
   if(R<45 & R>32 & G<65 & G>55){
-    color = 1; // Red
+    color = 1; // Rojo
   }
   if(R<53 & R>40 & G<53 & G>40){
-    color = 2; // Green
+    color = 2; // Verde
   }
   else
   {
-    color = 3; // Blue
+    color = 3; // Azul
   }
       return color;  
  }
@@ -162,7 +162,7 @@ Conectar un servo a Arduino es sencillo. El servo dispone de tres cables, dos de
 (GND y Vcc) y uno de señal (Sig). En general, la alimentación a los servos se realiza desde una
 fuente de tensión externa (una batería o una fuente de alimentación) a una tensión de 5V6.5V, siendo 6V la tensión idónea. Arduino puede llegar a proporcionar corriente suficiente.
 
-**Ejemplo de codigo**
+**Ejemplo de código**
 ```
 //Avanza de 115 a 65, posición donde está el sensor de color. Ahí, se detiene con un delay de 500.
       for(int i = 140; i > 65; i--) {
@@ -186,7 +186,7 @@ En nuestro caso solo hemos empleado el servomotor con bucles for para moverlo en
 
 ### Keypad 4x4
 
-Este componente, situado en la parte frontal de la máquina, se trata de un teclado 4x4 cuya función es introducir una serie de dígitos que conforman la contraseña de inicio de la máquina. Si la contraseña es la correcta, comienza el funcionamiento de la máquina, y si esta es incorrecta, tendrá que volver a intentar introducir una contraseña válida. Este componente va conectado simultáneamente con una pantalla LCD (explicada más adelante) que va mostrando el numero de dígitos que vamos introduciendo por el keypad en forma de asteriscos. También aparecen por la pantalla LCD las instrucciones de "Introduzca contraseña" y "Contraseña incorrecta".
+Este componente, situado en la parte frontal de la máquina, se trata de un teclado 4x4 cuya función es recibir una serie de dígitos que conforman la contraseña de inicio de la máquina. Si la contraseña es la correcta, comienza el funcionamiento de la máquina, y si esta es incorrecta, tendrá que volver a intentar introducir una contraseña válida. Este componente va conectado simultáneamente con una pantalla LCD (explicada más adelante) que va mostrando el numero de dígitos que vamos introduciendo por el keypad en forma de asteriscos. También aparecen por la pantalla LCD las instrucciones de "Introduzca contraseña" y "Contraseña incorrecta". 
 
 **Ejemplo de codigo**
 ```
@@ -293,3 +293,26 @@ void loop()
 En el código primero se declara el numero de filas y de columnas para luego crear una matriz con las teclas de el panel. También se declaran al inicio las variables que nos ayudarán a comprobar si la contrasea es correcta. Declaramos la contraseña correcta y "newpass" que limpiará la combinación introducida cuando el void loop llegue a su fin. Tambien inicializamos keypad con todos los datos anteriores utilizando la librería "keypad.h". Al inicio del loop se comprueba que no hay ningún error con la contraseña declarada y pide introducir una contraseña mientras no haya ningún dígito guardado. Cuando detecta que ya hay una combinación de seis caracteres los comprueba uno a uno, añadiendo uno a "c" cada vez que uno es correcto. Cuando hay seis correctos empieza el resto del programa. Al final limpia todas las variables para que se inicialicen como al principio.
 
 ### LCD Screen
+
+Este componente situado en la parte frontal de la máquina es una pantalla de 16 lineas por 2 columnas. Su función es imprimir diferentes instrucciones para el usuario.
+En nuestra máquina, te va dando instrucciones para hacerla funcionar, al principio muestra un mensaje para que introduzcas la contraseña. Seguidamente, al introducir la contraseña va mostrando en forma de asteriscos el numero de dígitos que vas introduciendo. Tras acabar el funcionamiento, muestra un mensaje personalizado en funcion de la combinacion de colores de los caramelos que han ido saliendo. Está sincronizada con el sensor keypad 4x4, con el sensor lector de colores y con unos led que ayudan visualmente a saber si la contraseña es correcta o no.
+
+**Ejemplo de código**
+```
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);  // pines RS, E, D3, D2, D1, D0 de modulo 1602A
+void setup() {
+Serial.begin(9600);
+lcd.begin(16, 2);     // inicializa a display de 16 columnas y 2 lineas
+}
+void loop{
+    lcd.clear();
+    lcd.setCursor(0,0);
+    lcd.print("  Introduzca la");
+    lcd.setCursor(0,1);
+    lcd.print("     clave");
+  delay(delay1);
+}
+```
+
+Como se puede ver el código para este componente es muy sencillo. Utilizando la librería "LiquidCrystal" basta con especificar el número de filas y columnas para inicializar la pantalla. Luego, para escribir en diferentes posiciones basta con cambiar el cursor a las coordenadas deseadas.
